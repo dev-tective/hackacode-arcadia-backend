@@ -7,7 +7,8 @@ public enum Role {
     ADMIN("admin"),
     RECEPTION("reception"),
     NURSE("nurse"),
-    DOCTOR("doctor");
+    DOCTOR("doctor"),
+    CLIENT("client");
 
     private final String role;
 

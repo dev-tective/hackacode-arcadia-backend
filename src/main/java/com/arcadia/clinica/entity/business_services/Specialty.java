@@ -1,4 +1,4 @@
-package com.arcadia.clinica.entity;
+package com.arcadia.clinica.entity.business_services;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
