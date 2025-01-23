@@ -30,8 +30,8 @@ public class MedicalServiceDTO {
     @NotNull(message = "duration must not be null")
     private Duration duration;
     @NotBlank(message = "description must not be blank")
-    @Size(min = 5, max = 15, message = "speciality name must be between 5 and 15 characters")
-    private String specialityName;
+    @Size(min = 5, max = 15, message = "specialty name must be between 5 and 15 characters")
+    private String specialtyName;
     @NotBlank(message = "description must not be blank")
     @Size(min = 5, max = 15, message = "type service name must be between 5 and 15 characters")
     private String typeServiceName;

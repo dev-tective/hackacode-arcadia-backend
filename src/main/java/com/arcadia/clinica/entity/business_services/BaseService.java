@@ -2,10 +2,8 @@ package com.arcadia.clinica.entity.business_services;
 
 import com.arcadia.clinica.entity.business.AppointmentItem;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -26,4 +24,8 @@ public class BaseService {
 
     @OneToMany(targetEntity = AppointmentItem.class, mappedBy = "item")
     private List<AppointmentItem> appointmentItems;
+
+
+
+
 }
