@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DoctorDTO extends UserDTO {
+public class DoctorDTO {
     private Specialty specialty;
 //    private List<AppointmentItemDTO> appointmentItemsDTO;
 }
