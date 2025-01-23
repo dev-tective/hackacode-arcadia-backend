@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class ServicePackage extends BaseService {
+public class MedicalServicePackage extends BaseService {
     @Column(nullable = false)
     private LocalDate available;
     @Column(nullable = false)
@@ -22,5 +22,5 @@ public class ServicePackage extends BaseService {
     private Boolean state;
 
     @ManyToMany(mappedBy = "servicePackages")
-    private List<Service> services;
+    private List<MedicalService> medicalServices;
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Service extends BaseService {
+public class MedicalService extends BaseService {
     @Column(nullable = false, unique = true)
     private String name;
     @Column(nullable = false)
@@ -28,5 +28,5 @@ public class Service extends BaseService {
     private Specialty specialty;
 
     @ManyToMany
-    private List<ServicePackage> servicePackages;
+    private List<MedicalServicePackage> medicalServicePackages;
 }
