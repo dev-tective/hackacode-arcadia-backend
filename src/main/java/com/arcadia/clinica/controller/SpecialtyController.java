@@ -26,13 +26,8 @@ public class SpecialtyController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Specialty> getSpecialty(@PathVariable(value = "name") String name) {
-        Optional<Specialty> specialtyOptional = this.specialtyService.findSpecialtyByName(name);
-        if (specialtyOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body(specialtyOptional.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<Optional<Specialty>> getSpecialty(@PathVariable(value = "name") String name) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.specialtyService.findSpecialtyByName(name));
     }
 
     @GetMapping("/all")
