@@ -18,3 +18,23 @@ public class Client extends User {
     @OneToMany(targetEntity = Receipt.class, mappedBy = "client")
     private List<Receipt> receipts;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,9 @@ public class Staff extends User {
     private DayOff dayOff;
 
     private Float salary;
+
+    public void prePersist() {
+        if (salary == null) salary = 1125.0f;
+        if (dayOff == null) dayOff = DayOff.SUNDAY;
+    }
 }

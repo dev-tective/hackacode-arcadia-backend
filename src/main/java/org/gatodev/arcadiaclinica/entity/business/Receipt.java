@@ -1,7 +1,6 @@
 package org.gatodev.arcadiaclinica.entity.business;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 import org.gatodev.arcadiaclinica.entity.persons.Client;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,8 +21,8 @@ import lombok.Setter;
 @Entity
 public class Receipt {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private Boolean paymentReceived;
