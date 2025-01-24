@@ -27,7 +27,7 @@ public class MedicalService extends BaseService {
     @ManyToOne
     private Specialty specialty;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "medicalServices")
     private List<MedicalServicePackage> medicalServicePackages;
 
     public static MedicalServiceBuilder builder() {

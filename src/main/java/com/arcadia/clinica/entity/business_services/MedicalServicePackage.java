@@ -20,7 +20,12 @@ public class MedicalServicePackage extends BaseService {
     @Column(nullable = false)
     private Boolean status;
 
-    @ManyToMany(mappedBy = "servicePackages")
+    @ManyToMany
+    @JoinTable(
+            name = "medical_service_package_services",
+            joinColumns = @JoinColumn(name = "service_package_id"),
+            inverseJoinColumns = @JoinColumn(name = "medical_service_id")
+    )
     private List<MedicalService> medicalServices;
 
 
