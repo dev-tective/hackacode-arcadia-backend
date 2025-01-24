@@ -31,7 +31,7 @@ public class TypeServiceController {
         Optional<TypeService> typeServiceOptional = this.typeService.getTypeByName(name);
         return ResponseEntity.status(HttpStatus.OK).body(typeServiceOptional);
     }
-    
+
     @GetMapping("/all")
     public ResponseEntity<List<TypeService>> getAllTypeService() {
         return ResponseEntity.status(HttpStatus.OK).body(this.typeService.getAllTypes());
