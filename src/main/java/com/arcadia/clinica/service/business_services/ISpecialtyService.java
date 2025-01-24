@@ -11,6 +11,6 @@ public interface ISpecialtyService {
     List<Specialty> findAll();
     Optional<Specialty> findSpecialtyByName(String name);
     void delete(Integer id);
-
+    Specialty update(Specialty specialty, Integer id);
 
 }

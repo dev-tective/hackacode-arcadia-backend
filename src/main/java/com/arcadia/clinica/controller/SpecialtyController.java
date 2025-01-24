@@ -47,4 +47,11 @@ public class SpecialtyController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ResponseMessage("specialty deleted successfully"));
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ResponseMessage> updateSpecialty(@PathVariable(value="id") Integer id,
+                                                           @RequestBody Specialty specialty) {
+        this.specialtyService.update(specialty, id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ResponseMessage("specialty updated successfully"));
+    }
+
 }

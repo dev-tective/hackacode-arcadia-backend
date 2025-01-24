@@ -11,5 +11,5 @@ public interface ITypeService {
     List<TypeService> getAllTypes();
     Optional<TypeService> getTypeByName(String typeName);
     void deleteType(Integer id);
-
+    TypeService updateType(TypeService typeService, Integer id);
 }

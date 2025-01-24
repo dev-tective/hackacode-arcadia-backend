@@ -40,8 +40,8 @@ public class MedicalServicePackageImp implements IMedicalServicePackage {
     }
 
     @Override
-    public Optional<MedicalServicePackage> findById(Integer id_service) {
-        Optional<MedicalServicePackage> medicalServicePackage = this.medicalServicePackageRepository.findById(id_service);
+    public Optional<MedicalServicePackage> findById(Integer idService) {
+        Optional<MedicalServicePackage> medicalServicePackage = this.medicalServicePackageRepository.findById(idService);
         if(medicalServicePackage.isPresent()){
             return medicalServicePackage;
         }
@@ -54,7 +54,32 @@ public class MedicalServicePackageImp implements IMedicalServicePackage {
     }
 
     @Override
-    public void delete(Integer id_service) {
-        this.medicalServicePackageRepository.deleteById(id_service);
+    public void delete(Integer idService) {
+        this.medicalServicePackageRepository.deleteById(idService);
     }
+
+    @Override
+    public MedicalServicePackage update(Integer idService, MedicalServicePackageDTO entity) {
+        Optional<MedicalServicePackage> optionalMedicalServicePackage = this.medicalServicePackageRepository.findById(idService);
+
+        if (optionalMedicalServicePackage.isPresent()) {
+            MedicalServicePackage existingPackage = optionalMedicalServicePackage.get();
+
+            existingPackage.setCode(entity.getCode());
+            existingPackage.setPrice(entity.getPrice());
+            existingPackage.setAvailable(entity.getAvailable());
+            existingPackage.setNotAvailable(entity.getNotAvailable());
+            existingPackage.setStatus(entity.getStatus());
+
+            if (entity.getMedicalServices() != null && !entity.getMedicalServices().isEmpty()) {
+                List<MedicalService> updatedMedicalServices = this.medicalService.findAll();
+                existingPackage.setMedicalServices(updatedMedicalServices);
+            }
+
+            return this.medicalServicePackageRepository.save(existingPackage);
+        } else {
+            throw new RuntimeException("medical service package with ID " + idService + " not found.");
+        }
+    }
+
 }

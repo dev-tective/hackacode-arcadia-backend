@@ -43,4 +43,10 @@ public class MedicalServicePackageController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("medical service package deleted successfully"));
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ResponseMessage> updateMedicalServicePackage(@PathVariable Integer id, @RequestBody MedicalServicePackageDTO medicalServicePackageDto) {
+        this.medicalServicePackage.update(id, medicalServicePackageDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("medical service package updated successfully"));
+    }
+
 }

@@ -40,4 +40,23 @@ public class SpecialtyService implements ISpecialtyService {
     public void delete(Integer id) {
         this.specialityRepository.deleteById(id);
     }
+
+    @Override
+    public Specialty update(Specialty specialty, Integer id) {
+
+        Optional<Specialty> specialtyOptional = this.specialityRepository.findById(id);
+
+        if (specialtyOptional.isPresent()) {
+            Specialty existingSpecialty = specialtyOptional.get();
+
+            if (specialty.getName() != null && !specialty.getName().isEmpty()) {
+                existingSpecialty.setName(specialty.getName());
+            }
+
+            return this.specialityRepository.save(existingSpecialty);
+        } else {
+            throw new IllegalArgumentException("specialty with ID " + id + " not found.");
+        }
+    }
+
 }

@@ -26,8 +26,8 @@ public class TypeServiceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseMessage("Type Service created successfully"));
     }
 
-    @GetMapping("/name")
-    public ResponseEntity<Optional<TypeService>> getTypeServiceByName(@RequestParam String name) {
+    @GetMapping("/{name}")
+    public ResponseEntity<Optional<TypeService>> getTypeServiceByName(@PathVariable(value="name") String name) {
         Optional<TypeService> typeServiceOptional = this.typeService.getTypeByName(name);
         return ResponseEntity.status(HttpStatus.OK).body(typeServiceOptional);
     }
@@ -37,10 +37,17 @@ public class TypeServiceController {
         return ResponseEntity.status(HttpStatus.OK).body(this.typeService.getAllTypes());
     }
 
-    @DeleteMapping("/delete/id")
-    public ResponseEntity<ResponseMessage> deleteTypeServiceById(@RequestParam Integer id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseMessage> deleteTypeServiceById(@PathVariable Integer id) {
         this.typeService.deleteType(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("Type Service deleted successfully"));
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ResponseMessage> updateTypeServiceById(@RequestBody TypeService typeService,
+                                                                 @PathVariable Integer id) {
+        this.typeService.updateType(typeService,id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("Type Service updated successfully"));
     }
 
 }

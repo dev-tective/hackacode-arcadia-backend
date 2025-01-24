@@ -41,4 +41,19 @@ public class TypeServiceImp implements ITypeService {
     public void deleteType(Integer id) {
         this.typeServiceRepository.deleteById(id);
     }
+
+    @Override
+    public TypeService updateType(TypeService typeService, Integer id) {
+
+        Optional<TypeService> typeServiceOptional = this.typeServiceRepository.findById(id);
+        if(typeServiceOptional.isPresent()){
+            TypeService typeServ = typeServiceOptional.get();
+            typeServ.setName(typeService.getName());
+            typeServ.setAbbreviation(typeService.getAbbreviation());
+            return this.typeServiceRepository.save(typeServ);
+        }else{
+            throw new IllegalArgumentException("type service with ID " + id + " not found.");
+        }
+
+    }
 }

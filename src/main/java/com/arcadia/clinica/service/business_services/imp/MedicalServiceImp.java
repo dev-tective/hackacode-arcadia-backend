@@ -52,8 +52,8 @@ public class MedicalServiceImp implements IMedicalService {
     }
 
     @Override
-    public Optional<MedicalService> findById(Integer id_service) {
-        Optional<MedicalService> medicalService = this.medicalServiceRepository.findById(id_service);
+    public Optional<MedicalService> findById(Integer idService) {
+        Optional<MedicalService> medicalService = this.medicalServiceRepository.findById(idService);
         if(medicalService.isPresent()){
             return medicalService;
         }
@@ -66,7 +66,35 @@ public class MedicalServiceImp implements IMedicalService {
     }
 
     @Override
-    public void delete(Integer id_service) {
-        this.medicalServiceRepository.deleteById(id_service);
+    public void delete(Integer idService) {
+        this.medicalServiceRepository.deleteById(idService);
     }
+
+    @Override
+    public MedicalService update(Integer idService, MedicalServiceDTO entity) {
+        Optional<MedicalService> optionalMedicalService = this.medicalServiceRepository.findById(idService);
+
+        if (optionalMedicalService.isPresent()) {
+            MedicalService existingService = optionalMedicalService.get();
+
+            existingService.setCode(entity.getCode());
+            existingService.setPrice(entity.getPrice());
+            existingService.setName(entity.getName());
+            existingService.setDescription(entity.getDescription());
+            existingService.setDuration(entity.getDuration());
+
+            Optional<Specialty> specialtyOptional = this.specialtyService.findSpecialtyByName(entity.getSpecialtyName());
+            Specialty specialty = specialtyOptional.orElse(null);
+            existingService.setSpecialty(specialty);
+
+            Optional<TypeService> typeServiceOptional = this.typeService.getTypeByName(entity.getTypeServiceName());
+            TypeService typeService = typeServiceOptional.orElse(null);
+            existingService.setTypeService(typeService);
+
+            return this.medicalServiceRepository.save(existingService);
+        } else {
+            throw new RuntimeException("medical service with ID " + idService + " not found.");
+        }
+    }
+
 }
