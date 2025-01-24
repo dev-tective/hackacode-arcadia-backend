@@ -5,6 +5,7 @@ import com.arcadia.clinica.DTOS.business_services.MedicalServicePackageDTO;
 import com.arcadia.clinica.entity.business_services.MedicalServicePackage;
 import com.arcadia.clinica.response.ResponseMessage;
 import com.arcadia.clinica.service.business_services.IMedicalServicePackage;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class MedicalServicePackageController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ResponseMessage> addMedicalServicePackage(@RequestBody MedicalServicePackageDTO medicalServicePackageDto) {
+    public ResponseEntity<ResponseMessage> addMedicalServicePackage(@Valid @RequestBody MedicalServicePackageDTO medicalServicePackageDto) {
         this.medicalServicePackage.save(medicalServicePackageDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseMessage("medical service package added successfully"));
     }
@@ -44,7 +45,8 @@ public class MedicalServicePackageController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ResponseMessage> updateMedicalServicePackage(@PathVariable Integer id, @RequestBody MedicalServicePackageDTO medicalServicePackageDto) {
+    public ResponseEntity<ResponseMessage> updateMedicalServicePackage(@PathVariable Integer id,
+                                                                      @Valid @RequestBody MedicalServicePackageDTO medicalServicePackageDto) {
         this.medicalServicePackage.update(id, medicalServicePackageDto);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage("medical service package updated successfully"));
     }

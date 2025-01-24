@@ -4,6 +4,7 @@ import com.arcadia.clinica.DTOS.business_services.MedicalServiceDTO;
 import com.arcadia.clinica.entity.business_services.MedicalService;
 import com.arcadia.clinica.response.ResponseMessage;
 import com.arcadia.clinica.service.business_services.IMedicalService;
+import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class MedicalServiceController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ResponseMessage> add(@RequestBody MedicalServiceDTO medicalServiceDto) {
+    public ResponseEntity<ResponseMessage> add(@Valid @RequestBody MedicalServiceDTO medicalServiceDto) {
         this.medicalService.save(medicalServiceDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseMessage("medical service added successfully"));
     }
@@ -46,7 +47,7 @@ public class MedicalServiceController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<ResponseMessage> updateMedicalService(@PathVariable(name = "id")Integer id,
-                                                                @RequestBody MedicalServiceDTO medicalServiceDto) {
+                                                                @Valid @RequestBody MedicalServiceDTO medicalServiceDto) {
         this.medicalService.update(id, medicalServiceDto);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ResponseMessage("medical service updated successfully"));
     }
