@@ -1,15 +1,11 @@
 package org.gatodev.arcadiaclinica.entity.business;
 
 import java.time.LocalDateTime;
-import org.gatodev.arcadiaclinica.entity.medical_services.BaseService;
+
+import jakarta.persistence.*;
+import org.gatodev.arcadiaclinica.entity.medical_services.MedicalService;
 import org.gatodev.arcadiaclinica.entity.persons.Doctor;
 import org.gatodev.arcadiaclinica.entity.persons.Patient;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,20 +22,23 @@ public class MedicalAppointment {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime attentionDate;
+    private LocalDateTime attentionDate = LocalDateTime.now();
 
     @Column(nullable = false)
-    private LocalDateTime appointmentStart;
+    private LocalDateTime appointmentStart = LocalDateTime.now().plusMinutes(30);
 
     @Column(nullable = false)
-    private LocalDateTime appointmentEnd;
+    private LocalDateTime appointmentEnd = LocalDateTime.now().plusHours(1).plusMinutes(30);
 
     @ManyToOne
-    private BaseService item;
+    @JoinColumn(nullable = false)
+    private MedicalService medicalService;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Patient patient;
     
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Doctor doctor;
 }

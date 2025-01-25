@@ -1,14 +1,9 @@
 package org.gatodev.arcadiaclinica.entity.business;
 
 import java.math.BigDecimal;
+
+import jakarta.persistence.*;
 import org.gatodev.arcadiaclinica.entity.persons.Client;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,14 +25,18 @@ public class Receipt {
     @Column(nullable = false)
     private BigDecimal amount;
 
-    private Float discount;
+    @Column(nullable = false)
+    private Float discount = 0f;
 
     @OneToOne(targetEntity = MedicalAppointment.class)
+    @JoinColumn(nullable = false)
     private MedicalAppointment medicalAppointment;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private TypePayment typePayment;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Client client;
 }

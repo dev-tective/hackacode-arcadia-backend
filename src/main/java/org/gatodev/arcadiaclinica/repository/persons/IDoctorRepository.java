@@ -1,6 +1,6 @@
 package org.gatodev.arcadiaclinica.repository.persons;
 
-import org.gatodev.arcadiaclinica.entity.medical_services.Specialty;
+import org.gatodev.arcadiaclinica.entity.medical_services.MedicalSpecialty;
 import org.gatodev.arcadiaclinica.entity.persons.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
@@ -16,13 +16,13 @@ public interface IDoctorRepository extends JpaRepository<Doctor, UUID> {
 
     List<Doctor> findAllByFirstnameAndLastname(String firstname, String lastname);
 
-    List<Doctor> findAllBySpecialty(Specialty specialty);
+    List<Doctor> findAllByMedicalSpecialty(MedicalSpecialty medicalSpecialty);
 
     List<Doctor> findAllByMedicalAppointmentsIsNull();
 
     List<Doctor> findAllByMedicalAppointmentsIsNotNull();
 
-    List<Doctor> findAllBySpecialtyAndMedicalAppointmentsIsNull(Specialty specialty);
+    List<Doctor> findAllByMedicalSpecialtyAndMedicalAppointmentsIsNull(MedicalSpecialty specialty);
 
-    List<Doctor> findAllBySpecialtyAndMedicalAppointmentsIsNotNull(Specialty specialty);
+    List<Doctor> findAllByMedicalSpecialtyAndMedicalAppointmentsIsNotNull(MedicalSpecialty specialty);
 }

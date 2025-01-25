@@ -1,22 +1,24 @@
 package org.gatodev.arcadiaclinica.entity.business;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.gatodev.arcadiaclinica.entity.medical_services.BaseAttributes;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class TypePayment {
+public class TypePayment extends BaseAttributes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
+
+    @PrePersist
+    public void prePersist() {
+        if (getState() == null) setState(true);
+    }
 }

@@ -20,6 +20,6 @@ public class StaffController {
 
     @GetMapping("/add/staff")
     public ResponseEntity<?> addStaff(@RequestBody Staff staff) {
-        return ResponseEntity.ok(staffService.addStaff(staff));
+        return ResponseEntity.ok(staffService.addEntity(staff));
     }
 }

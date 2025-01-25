@@ -3,49 +3,57 @@ package org.gatodev.arcadiaclinica.service.persons.impl;
 import org.gatodev.arcadiaclinica.entity.persons.Client;
 import org.gatodev.arcadiaclinica.repository.persons.IClientRepository;
 import org.gatodev.arcadiaclinica.service.persons.IClientService;
-import org.gatodev.arcadiaclinica.service.persons.IPersonService;
 import org.gatodev.arcadiaclinica.service.persons.IUserService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 @Service
-public class ClientServiceImpl implements IClientService, IPersonService<Client> {
+public class ClientServiceImpl implements IClientService {
 
     private final IClientRepository clientRepository;
-    private final IUserService userService;
 
-    public ClientServiceImpl(IClientRepository clientRepository, IUserService userService) {
+    public ClientServiceImpl(IClientRepository clientRepository) {
         this.clientRepository = clientRepository;
-        this.userService = userService;
     }
 
     @Override
-    public Client addClient(Client client) {
-        checkSavePerson(client);
-        return clientRepository.save(client);
+    public Client addEntity(Client person) {
+        verificatePerson(person);
+        IUserService.encryptPassword(person);
+        return clientRepository.save(person);
     }
 
     @Override
-    public Client updateClient(Client client) {
-        Client oldClient = getClientByDni(client.getDni());
-        checkUpdatePerson(oldClient, client);
-        return clientRepository.save(oldClient);
+    public Client updateEntity(Client person) {
+        if (!clientRepository.existsById(person.getId())) {
+            throw new RuntimeException("Client with id " + person.getId() + " not found");
+        }
+        verificatePerson(person);
+        IUserService.encryptPassword(person);
+        return clientRepository.save(person);
     }
 
     @Override
-    public Client getClientByDni(String dni) {
+    public Client getEntityByDni(String dni) {
         return clientRepository.findByDni(dni)
-                .orElseThrow(() -> new RuntimeException("No client found with dni: " + dni));
+                .orElseThrow(() -> new RuntimeException("Dni not found"));
     }
 
     @Override
-    public Client getClientByEmail(String email) {
+    public Client getEntityByEmail(String email) {
         return clientRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("No client found with email: " + email));
+                .orElseThrow(() -> new RuntimeException("Email not found"));
     }
 
     @Override
-    public List<Client> getAllClients() {
+    public Client getEntityById(UUID id) {
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Id not found"));
+    }
+
+    @Override
+    public List<Client> getAllEntities() {
         return clientRepository.findAll();
     }
 
@@ -62,16 +70,5 @@ public class ClientServiceImpl implements IClientService, IPersonService<Client>
     @Override
     public List<Client> getAllClientsByFirstNameAndLastName(String firstName, String lastName) {
         return clientRepository.findAllByFirstnameAndLastname(firstName, lastName);
-    }
-
-    // Revisa campos vacíos y existencias antes de guardar y actualizar
-    @Override
-    public void checkSaveEntity(Client person) {
-        userService.checkSaveEntity(person);
-    }
-
-    @Override
-    public void checkUpdateEntity(Client person, Client updatedPerson) {
-        userService.checkUpdateEntity(person, updatedPerson);
     }
 }

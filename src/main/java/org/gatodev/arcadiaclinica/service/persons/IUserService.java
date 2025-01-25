@@ -1,32 +1,21 @@
 package org.gatodev.arcadiaclinica.service.persons;
 
+
+import jakarta.validation.Valid;
 import org.gatodev.arcadiaclinica.entity.persons.User;
-import org.gatodev.arcadiaclinica.util.enums.Role;
-import java.util.List;
-import java.util.UUID;
+import org.mindrot.jbcrypt.BCrypt;
 
 public interface IUserService {
-    User getUserByDni(String dni);
-
-    User getUserByEmail(String email);
-
-    User getUserById(UUID id);
 
     void deleteUserByDni(String dni);
-
-    List<User> getAllUsers();
-
-    List<User> getAllUsersByRole(Role role);
 
     void verificateExistByDni(String dni);
 
     void verificateExistByEmail(String email);
 
-    void verificatePassword(User user);
-
-    void checkSaveEntity(User person);
-
-    void checkUpdateEntity(User person, User updatedPerson);
+    static void encryptPassword(@Valid User user) {
+        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+    }
 
     boolean verifyPassword(User user, String rawPassword);
 }

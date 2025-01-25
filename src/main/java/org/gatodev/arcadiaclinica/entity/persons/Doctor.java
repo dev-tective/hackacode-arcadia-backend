@@ -1,8 +1,10 @@
 package org.gatodev.arcadiaclinica.entity.persons;
 
 import java.util.List;
+
+import jakarta.persistence.JoinColumn;
 import org.gatodev.arcadiaclinica.entity.business.MedicalAppointment;
-import org.gatodev.arcadiaclinica.entity.medical_services.Specialty;
+import org.gatodev.arcadiaclinica.entity.medical_services.MedicalSpecialty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -18,7 +20,8 @@ import lombok.Setter;
 @Entity
 public class Doctor extends Staff {
     @ManyToOne
-    private Specialty specialty;
+    @JoinColumn(nullable = false)
+    private MedicalSpecialty medicalSpecialty;
     
     @OneToMany(mappedBy = "doctor", targetEntity = MedicalAppointment.class)
     private List<MedicalAppointment> medicalAppointments;

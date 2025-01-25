@@ -3,42 +3,47 @@ package org.gatodev.arcadiaclinica.service.persons.impl;
 import org.gatodev.arcadiaclinica.entity.persons.Doctor;
 import org.gatodev.arcadiaclinica.repository.persons.IDoctorRepository;
 import org.gatodev.arcadiaclinica.service.persons.IDoctorService;
-import org.gatodev.arcadiaclinica.service.persons.IPersonService;
-import org.gatodev.arcadiaclinica.service.persons.IStaffService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.UUID;
 
 @Service
-public class DoctorServiceImpl implements IDoctorService, IPersonService<Doctor> {
+public class DoctorServiceImpl implements IDoctorService {
 
-    private final IStaffService staffService;
     private final IDoctorRepository doctorRepository;
 
-    public DoctorServiceImpl(IStaffService staffService, IDoctorRepository doctorRepository) {
-        this.staffService = staffService;
+    public DoctorServiceImpl(IDoctorRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
     }
 
     @Override
-    public Doctor addDoctor(Doctor doctor) {
+    public Doctor addEntity(Doctor person) {
         return null;
     }
 
     @Override
-    public Doctor updateDoctor(Doctor doctor) {
+    public Doctor updateEntity(Doctor person) {
         return null;
     }
 
     @Override
-    public Doctor getDoctorByDni(String dni) {
-        return doctorRepository.findByDni(dni)
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+    public Doctor getEntityByDni(String dni) {
+        return null;
     }
 
     @Override
-    public List<Doctor> getAllDoctors() {
-        return doctorRepository.findAll();
+    public Doctor getEntityByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public Doctor getEntityById(UUID id) {
+        return null;
+    }
+
+    @Override
+    public List<Doctor> getAllEntities() {
+        return List.of();
     }
 
     @Override
@@ -79,18 +84,5 @@ public class DoctorServiceImpl implements IDoctorService, IPersonService<Doctor>
     @Override
     public List<Doctor> getAllDoctorsBySpecialtyAndMedicalAppointmentIsNotNull(Integer idSpecialty) {
         return null;
-    }
-
-    // Revisa campos vacíos y existencias antes de guardar y actualizar
-    @Override
-    public void checkSaveEntity(Doctor person) {
-        //Buscar la Especialidad
-        staffService.checkSaveEntity(person);
-    }
-
-    @Override
-    public void checkUpdateEntity(Doctor person, Doctor updatedPerson) {
-        //Buscar la especialidad
-        staffService.checkUpdateEntity(person, updatedPerson);
     }
 }
