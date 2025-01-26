@@ -1,16 +1,12 @@
 package org.gatodev.arcadiaclinica.service.medical_services.impl;
 
-import org.gatodev.arcadiaclinica.entity.medical_services.BaseAttributes;
 import org.gatodev.arcadiaclinica.entity.medical_services.MedicalService;
 import org.gatodev.arcadiaclinica.entity.medical_services.MedicalServicePackage;
 import org.gatodev.arcadiaclinica.repository.medical_services.IMedicalServicePackageRepository;
 import org.gatodev.arcadiaclinica.service.medical_services.IMedicalServicePackageService;
 import org.springframework.stereotype.Service;
-
 import java.time.Duration;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MedicalServicePackageServiceImpl implements IMedicalServicePackageService {
@@ -24,12 +20,9 @@ public class MedicalServicePackageServiceImpl implements IMedicalServicePackageS
     @Override
     public MedicalServicePackage addMedicalServicePackage(MedicalServicePackage msp) {
         msp.validateCode();
-        String serviceCodes = msp.getServices().stream()
-                .map(BaseAttributes::getCode)
-                .collect(Collectors.joining()) + msp.getCode();
-        msp.setCode(serviceCodes);
 
-        Duration totalDuration = msp.getServices().stream()
+        Duration totalDuration = msp.getServices()
+                .stream()
                 .map(MedicalService::getDuration)
                 .reduce(Duration.ZERO, Duration::plus);
 
@@ -37,9 +30,23 @@ public class MedicalServicePackageServiceImpl implements IMedicalServicePackageS
         return medicalServicePackageRepository.save(msp);
     }
 
+
     @Override
     public MedicalServicePackage updateMedicalServicePackage(MedicalServicePackage msp) {
-        return null;
+        if (!medicalServicePackageRepository.existsById(msp.getId())) {
+            throw new RuntimeException("Medical service package with id " + msp.getId() + " does not exist");
+        }
+
+        msp.validateCode();
+        msp.setState(true);
+
+        Duration totalDuration = msp.getServices()
+                .stream()
+                .map(MedicalService::getDuration)
+                .reduce(Duration.ZERO, Duration::plus);
+
+        msp.setDuration(totalDuration);
+        return medicalServicePackageRepository.save(msp);
     }
 
     @Override
@@ -52,7 +59,8 @@ public class MedicalServicePackageServiceImpl implements IMedicalServicePackageS
     public void desactivateMedicalServicePackageById(int id) {
         MedicalServicePackage msp = getMedicalServicePackageById(id);
 
-        boolean hasInactiveService = msp.getServices().stream()
+        boolean hasInactiveService = msp.getServices()
+                .stream()
                 .anyMatch(service -> !service.getState());
 
         if (hasInactiveService) {
@@ -66,7 +74,8 @@ public class MedicalServicePackageServiceImpl implements IMedicalServicePackageS
     public void activateMedicalServicePackageById(int id) {
         MedicalServicePackage msp = getMedicalServicePackageById(id);
 
-        boolean allActive = msp.getServices().stream()
+        boolean allActive = msp.getServices()
+                .stream()
                 .allMatch(MedicalService::getState);
 
         msp.setState(allActive);
@@ -84,7 +93,8 @@ public class MedicalServicePackageServiceImpl implements IMedicalServicePackageS
     public void restoreMedicalServicePackageById(int id) {
         MedicalServicePackage msp = getMedicalServicePackageById(id);
 
-        boolean allActive = msp.getServices().stream()
+        boolean allActive = msp.getServices()
+                .stream()
                 .allMatch(MedicalService::getState);
 
         if (!allActive) {

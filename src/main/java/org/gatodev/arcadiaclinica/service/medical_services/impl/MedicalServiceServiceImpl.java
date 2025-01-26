@@ -27,9 +27,6 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
     @Override
     public MedicalService addMedicalService(MedicalService ms) {
         ms.validateCode();
-        String newCode = ms.getMedicalTypeService().getCode() +
-                ms.getMedicalSpecialty().getCode();
-        ms.setCode(newCode);
         return medicalServiceRepository.save(ms);
     }
 
@@ -39,9 +36,6 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
             throw new RuntimeException("Medical service with id " + ms.getId() + " does not exist");
         }
         ms.validateCode();
-        String newCode = ms.getMedicalTypeService().getCode() +
-                ms.getMedicalSpecialty().getCode();
-        ms.setCode(newCode);
         ms.setState(true);
         return medicalServiceRepository.save(ms);
     }

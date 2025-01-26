@@ -4,40 +4,38 @@ import org.gatodev.arcadiaclinica.entity.persons.User;
 import org.gatodev.arcadiaclinica.repository.persons.IUserRepository;
 import org.gatodev.arcadiaclinica.service.persons.IUserService;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements IUserService {
 
     private final IUserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(IUserRepository userRepository) {
+    public UserServiceImpl(IUserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-    }
-
-    @Transactional
-    @Override
-    public void deleteUserByDni(String dni) {
-        verificateExistByDni(dni);
-        User deleteUser = userRepository.findByDni(dni)
-                .orElseThrow(() -> new RuntimeException("User with " + dni + " not found"));
-        deleteUser.setActive(false);
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public void verificateExistByDni(String dni) {
-        if (userRepository.existsByDni(dni)) {
-            throw new IllegalArgumentException("Dni " + dni + " already exists");
+    public void deleteUser(User user) {
+        User deleteUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new RuntimeException("User with dni " + user.getDni() + " not found"));
+        deleteUser.setEnabled(false);
+        userRepository.save(deleteUser);
+    }
+
+    @Override
+    public void verificateExistUser(User user) {
+        if (!userRepository.existsById(user.getId())) {
+            throw new RuntimeException("User with id " + user.getId() + " not found");
         }
     }
 
     @Override
-    public void verificateExistByEmail(String email) {
-        if (userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("Email " + email + " already exists");
-        }
+    public void encryptPassword(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
     }
 
     @Override

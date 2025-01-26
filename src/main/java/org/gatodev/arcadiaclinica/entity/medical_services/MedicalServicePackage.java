@@ -22,6 +22,5 @@ public class MedicalServicePackage extends MedicalService {
     private LocalDate notAvailable = LocalDate.now().plusMonths(1);
 
     @ManyToMany(mappedBy = "medicalServicePackages")
-    @JoinColumn(nullable = false)
     private List<MedicalService> services;
 }

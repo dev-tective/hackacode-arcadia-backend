@@ -1,21 +1,17 @@
 package org.gatodev.arcadiaclinica.service.persons;
 
-
 import jakarta.validation.Valid;
 import org.gatodev.arcadiaclinica.entity.persons.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 public interface IUserService {
 
-    void deleteUserByDni(String dni);
+    void deleteUser(User user);
 
-    void verificateExistByDni(String dni);
 
-    void verificateExistByEmail(String email);
+    void verificateExistUser(User user);
 
-    static void encryptPassword(@Valid User user) {
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-    }
+    void encryptPassword(User user);
 
     boolean verifyPassword(User user, String rawPassword);
 }

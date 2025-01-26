@@ -40,6 +40,6 @@ public class MedicalService extends BaseAttributes {
     @JoinColumn(nullable = false)
     private MedicalSpecialty medicalSpecialty;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany
     private List<MedicalServicePackage> medicalServicePackages;
 }

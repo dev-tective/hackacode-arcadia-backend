@@ -32,11 +32,6 @@ public class DoctorServiceImpl implements IDoctorService {
     }
 
     @Override
-    public Doctor getEntityByEmail(String email) {
-        return null;
-    }
-
-    @Override
     public Doctor getEntityById(UUID id) {
         return null;
     }

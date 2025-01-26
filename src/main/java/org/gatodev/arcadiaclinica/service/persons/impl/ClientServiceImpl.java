@@ -3,7 +3,6 @@ package org.gatodev.arcadiaclinica.service.persons.impl;
 import org.gatodev.arcadiaclinica.entity.persons.Client;
 import org.gatodev.arcadiaclinica.repository.persons.IClientRepository;
 import org.gatodev.arcadiaclinica.service.persons.IClientService;
-import org.gatodev.arcadiaclinica.service.persons.IUserService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +19,6 @@ public class ClientServiceImpl implements IClientService {
     @Override
     public Client addEntity(Client person) {
         verificatePerson(person);
-        IUserService.encryptPassword(person);
         return clientRepository.save(person);
     }
 
@@ -30,7 +28,6 @@ public class ClientServiceImpl implements IClientService {
             throw new RuntimeException("Client with id " + person.getId() + " not found");
         }
         verificatePerson(person);
-        IUserService.encryptPassword(person);
         return clientRepository.save(person);
     }
 
@@ -38,12 +35,6 @@ public class ClientServiceImpl implements IClientService {
     public Client getEntityByDni(String dni) {
         return clientRepository.findByDni(dni)
                 .orElseThrow(() -> new RuntimeException("Dni not found"));
-    }
-
-    @Override
-    public Client getEntityByEmail(String email) {
-        return clientRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Email not found"));
     }
 
     @Override

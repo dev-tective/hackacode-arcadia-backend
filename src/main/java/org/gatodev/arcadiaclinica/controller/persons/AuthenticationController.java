@@ -19,18 +19,18 @@ public class AuthenticationController {
         this.staffService = staffService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        Staff staff = staffService.getEntityByEmail(loginRequest.email());
-
-        if (!staff.getDni().equals(loginRequest.dni())) {
-            throw new IllegalArgumentException("Invalid DNI");
-        }
-
-        if (!userService.verifyPassword(staff, loginRequest.password())) {
-            throw new IllegalArgumentException("Invalid credentials");
-        }
-
-        return ResponseEntity.ok(staff);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+//        Staff staff = staffService.getEntityByEmail(loginRequest.email());
+//
+//        if (!staff.getDni().equals(loginRequest.dni())) {
+//            throw new IllegalArgumentException("Invalid DNI");
+//        }
+//
+//        if (!userService.verifyPassword(staff, loginRequest.password())) {
+//            throw new IllegalArgumentException("Invalid credentials");
+//        }
+//
+//        return ResponseEntity.ok(staff);
+//    }
 }

@@ -1,17 +1,16 @@
 package org.gatodev.arcadiaclinica.service.persons;
 
+import jakarta.validation.Valid;
 import org.gatodev.arcadiaclinica.entity.persons.Person;
 import java.util.List;
 import java.util.UUID;
 
 public interface IPersonService<T extends Person> {
-    T addEntity(T person);
+    T addEntity(@Valid T person);
 
     T updateEntity(T person);
 
     T getEntityByDni(String dni);
-
-    T getEntityByEmail(String email);
 
     T getEntityById(UUID id);
 
