@@ -4,7 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.JoinColumn;
 import org.gatodev.arcadiaclinica.entity.business.MedicalAppointment;
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalSpecialty;
+import org.gatodev.arcadiaclinica.entity.medical.MedicalSpecialty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;

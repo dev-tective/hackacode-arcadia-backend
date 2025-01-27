@@ -1,8 +1,8 @@
 package org.gatodev.arcadiaclinica.service.medical_services;
 
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalServicePackage;
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalSpecialty;
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalTypeService;
+import org.gatodev.arcadiaclinica.DTO.medical.MedicalServicePackageDTO;
+import org.gatodev.arcadiaclinica.entity.medical.MedicalServicePackage;
+
 import java.util.List;
 
 public interface IMedicalServicePackageService {
@@ -10,15 +10,17 @@ public interface IMedicalServicePackageService {
 
     MedicalServicePackage updateMedicalServicePackage(MedicalServicePackage medicalService);
 
-    MedicalServicePackage getMedicalServicePackageById(int id);
+    MedicalServicePackage getMedicalServicePackageById(Long id);
 
-    void desactivateMedicalServicePackageById(int id);
+    void deactivateMedicalServicePackageById(Long id);
 
-    void activateMedicalServicePackageById(int id);
+    void activateMedicalServicePackageById(Long id);
 
-    void deleteMedicalServicePackageById(int id);
+    void deleteMedicalServicePackageById(Long id);
 
-    void restoreMedicalServicePackageById(int id);
+    void restoreMedicalServicePackageById(Long id);
+
+    MedicalServicePackageDTO convertToDTO(MedicalServicePackage medicalServicePackage);
 
     List<MedicalServicePackage> getAllMedicalService();
 }

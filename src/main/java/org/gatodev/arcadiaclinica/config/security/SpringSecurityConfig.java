@@ -18,15 +18,28 @@ public class SpringSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+   /* @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET,"/staff")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.POST,"/staff/register")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .build();
+    }*/
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll() // Permite todas las rutas
-                )
+        return http.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/**").permitAll())
                 .csrf(AbstractHttpConfigurer::disable) // Desactiva CSRF si no usas formularios
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        return http.build();
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .build();
     }
 }

@@ -1,5 +1,6 @@
 package org.gatodev.arcadiaclinica.service.persons.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.gatodev.arcadiaclinica.entity.persons.Role;
 import org.gatodev.arcadiaclinica.repository.persons.IRoleRepository;
 import org.gatodev.arcadiaclinica.service.persons.IRoleService;
@@ -23,7 +24,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public Role updateRole(Role role) {
         if (!roleRepository.existsById(role.getId())) {
-            throw new RuntimeException("Role does not exist");
+            throw new EntityNotFoundException("Role does not exist");
         }
         return roleRepository.save(role);
     }
@@ -31,7 +32,7 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public void deleteRole(Role role) {
         if (!roleRepository.existsById(role.getId())) {
-            throw new RuntimeException("Role does not exist");
+            throw new EntityNotFoundException("Role does not exist");
         }
         roleRepository.delete(role);
     }
@@ -39,13 +40,13 @@ public class RoleServiceImpl implements IRoleService {
     @Override
     public Role getRoleById(int id) {
         return roleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Role does not exist"));
+                .orElseThrow(() -> new EntityNotFoundException("Role does not exist"));
     }
 
     @Override
     public Role getRoleByName(String roleName) {
         return roleRepository.findByName(roleName)
-                .orElseThrow(() -> new RuntimeException("Role does not exist"));
+                .orElseThrow(() -> new EntityNotFoundException("Role does not exist"));
     }
 
     @Override

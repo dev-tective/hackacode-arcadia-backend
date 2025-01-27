@@ -1,4 +1,4 @@
-package org.gatodev.arcadiaclinica.entity.medical_services;
+package org.gatodev.arcadiaclinica.entity.medical;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,12 +15,9 @@ import lombok.Setter;
 @Entity
 @DiscriminatorValue("Package")
 public class MedicalServicePackage extends MedicalService {
-    @Column(nullable = false)
     private LocalDate available = LocalDate.now();
-
-    @Column(nullable = false)
     private LocalDate notAvailable = LocalDate.now().plusMonths(1);
 
     @ManyToMany(mappedBy = "medicalServicePackages")
-    private List<MedicalService> services;
+    private List<MedicalService> medicalServices;
 }

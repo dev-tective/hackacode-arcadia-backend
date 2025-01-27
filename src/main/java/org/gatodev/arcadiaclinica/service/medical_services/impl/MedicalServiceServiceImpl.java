@@ -1,13 +1,19 @@
 package org.gatodev.arcadiaclinica.service.medical_services.impl;
 
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalService;
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalServicePackage;
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalSpecialty;
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalTypeService;
+import jakarta.persistence.EntityNotFoundException;
+import org.gatodev.arcadiaclinica.DTO.medical.MedicalServiceDTO;
+import org.gatodev.arcadiaclinica.DTO.medical.MedicalServiceMapper;
+import org.gatodev.arcadiaclinica.DTO.medical.MedicalServiceWPDTO;
+import org.gatodev.arcadiaclinica.entity.medical.MedicalService;
+import org.gatodev.arcadiaclinica.entity.medical.MedicalServicePackage;
+import org.gatodev.arcadiaclinica.entity.medical.MedicalSpecialty;
+import org.gatodev.arcadiaclinica.entity.medical.MedicalTypeService;
 import org.gatodev.arcadiaclinica.repository.medical_services.IMedicalServiceRepository;
 import org.gatodev.arcadiaclinica.service.medical_services.IMedicalServicePackageService;
 import org.gatodev.arcadiaclinica.service.medical_services.IMedicalServiceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
@@ -15,13 +21,14 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
 
     private final IMedicalServiceRepository medicalServiceRepository;
     private final IMedicalServicePackageService medicalServicePackageService;
+    private final MedicalServiceMapper medicalServiceMapper;
 
     public MedicalServiceServiceImpl(
             IMedicalServiceRepository medicalServiceRepository,
-            IMedicalServicePackageService medicalServicePackageService
-    ) {
+            IMedicalServicePackageService medicalServicePackageService, MedicalServiceMapper medicalServiceMapper) {
         this.medicalServiceRepository = medicalServiceRepository;
         this.medicalServicePackageService = medicalServicePackageService;
+        this.medicalServiceMapper = medicalServiceMapper;
     }
 
     @Override
@@ -33,7 +40,7 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
     @Override
     public MedicalService updateMedicalService(MedicalService ms) {
         if (!medicalServiceRepository.existsById(ms.getId())) {
-            throw new RuntimeException("Medical service with id " + ms.getId() + " does not exist");
+            throw new EntityNotFoundException("Medical service with id " + ms.getId() + " does not exist");
         }
         ms.validateCode();
         ms.setState(true);
@@ -41,13 +48,14 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
     }
 
     @Override
-    public MedicalService getMedicalServiceById(int id) {
+    public MedicalService getMedicalServiceById(Long id) {
         return medicalServiceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Medical service with id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Medical service with id " + id + " not found"));
     }
 
+    @Transactional
     @Override
-    public void desactivateMedicalServiceById(int id) {
+    public void deactivateMedicalServiceById(Long id) {
         MedicalService medicalService = getMedicalServiceById(id);
         medicalService.setState(false);
 
@@ -55,15 +63,16 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
 
         if (msp != null && !msp.isEmpty()) {
             msp.forEach(packageService -> {
-                medicalServicePackageService.desactivateMedicalServicePackageById(packageService.getId());
+                medicalServicePackageService.deactivateMedicalServicePackageById(packageService.getId());
             });
         }
 
         medicalServiceRepository.save(medicalService);
     }
 
+    @Transactional
     @Override
-    public void activateMedicalServiceById(int id) {
+    public void activateMedicalServiceById(Long id) {
         MedicalService medicalService = getMedicalServiceById(id);
         medicalService.setState(true);
 
@@ -78,6 +87,7 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
         medicalServiceRepository.save(medicalService);
     }
 
+    @Transactional
     @Override
     public void changeStateByMedicalTypeService(MedicalTypeService medicalTypeService, boolean state) {
         medicalServiceRepository.saveAll(getAllMedicalService()
@@ -87,11 +97,12 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
                     if (state) {
                         activateMedicalServiceById(ms.getId());
                     } else {
-                        desactivateMedicalServiceById(ms.getId());
+                        deactivateMedicalServiceById(ms.getId());
                     }
                 }).toList());
     }
 
+    @Transactional
     @Override
     public void changeStateByMedicalSpecialty(MedicalSpecialty medicalSpecialty, boolean state) {
         medicalServiceRepository.saveAll(getAllMedicalService()
@@ -101,7 +112,7 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
                     if (state) {
                         activateMedicalServiceById(ms.getId());
                     } else {
-                        desactivateMedicalServiceById(ms.getId());
+                        deactivateMedicalServiceById(ms.getId());
                     }
                 }).toList());
     }
@@ -109,5 +120,15 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
     @Override
     public List<MedicalService> getAllMedicalService() {
         return medicalServiceRepository.findAll();
+    }
+
+    @Override
+    public MedicalServiceDTO convertToDTO(MedicalService medicalService) {
+        return medicalServiceMapper.toMedicalServiceDTO(medicalService);
+    }
+
+    @Override
+    public MedicalServiceWPDTO convertToWPDTO(MedicalService medicalService) {
+        return medicalServiceMapper.toMedicalServiceWPDTO(medicalService);
     }
 }

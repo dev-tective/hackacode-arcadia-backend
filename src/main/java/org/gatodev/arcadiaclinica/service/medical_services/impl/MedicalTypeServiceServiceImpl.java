@@ -1,11 +1,13 @@
 package org.gatodev.arcadiaclinica.service.medical_services.impl;
 
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalService;
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalTypeService;
+import jakarta.persistence.EntityNotFoundException;
+import org.gatodev.arcadiaclinica.entity.medical.MedicalTypeService;
 import org.gatodev.arcadiaclinica.repository.medical_services.IMedicalTypeServiceRepository;
 import org.gatodev.arcadiaclinica.service.medical_services.IMedicalServiceService;
 import org.gatodev.arcadiaclinica.service.medical_services.IMedicalTypeServiceService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -28,6 +30,7 @@ public class MedicalTypeServiceServiceImpl implements IMedicalTypeServiceService
         return medicalTypeServiceRepository.save(typeService);
     }
 
+    @Transactional
     @Override
     public MedicalTypeService updateMedicalTypeService(MedicalTypeService typeService) {
         existsMedicalTypeServiceById(typeService.getId());
@@ -36,33 +39,38 @@ public class MedicalTypeServiceServiceImpl implements IMedicalTypeServiceService
         return medicalTypeServiceRepository.save(typeService);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public MedicalTypeService getMedicalTypeServiceById(int id) {
+    public MedicalTypeService getMedicalTypeServiceById(Long id) {
         return medicalTypeServiceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Type not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Medical Type Service with ID "
+                        + id + " not found"));
     }
 
+    @Transactional
     @Override
-    public void desactivateMedicalTypeServiceById(int id) {
+    public void deactivateMedicalTypeServiceById(Long id) {
         MedicalTypeService typeService = getMedicalTypeServiceById(id);
         typeService.setState(false);
         medicalServiceService.changeStateByMedicalTypeService(typeService, false);
     }
 
+    @Transactional
     @Override
-    public void activateMedicalTypeServiceById(int id) {
+    public void activateMedicalTypeServiceById(Long id) {
         MedicalTypeService typeService = getMedicalTypeServiceById(id);
         typeService.setState(true);
         medicalServiceService.changeStateByMedicalTypeService(typeService, true);
     }
 
     @Override
-    public void existsMedicalTypeServiceById(int id) {
+    public void existsMedicalTypeServiceById(Long id) {
         if (!medicalTypeServiceRepository.existsById(id)) {
-            throw new RuntimeException("Medical Type Service Not Found");
+            throw new EntityNotFoundException("Medical Type Service Not Found");
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<MedicalTypeService> getAllMedicalTypeService() {
         return medicalTypeServiceRepository.findAll();

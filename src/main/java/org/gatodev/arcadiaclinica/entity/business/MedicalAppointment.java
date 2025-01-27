@@ -3,7 +3,7 @@ package org.gatodev.arcadiaclinica.entity.business;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalService;
+import org.gatodev.arcadiaclinica.entity.medical.MedicalService;
 import org.gatodev.arcadiaclinica.entity.persons.Doctor;
 import org.gatodev.arcadiaclinica.entity.persons.Patient;
 import lombok.AllArgsConstructor;

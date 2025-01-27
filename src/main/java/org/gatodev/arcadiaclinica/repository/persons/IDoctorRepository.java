@@ -1,6 +1,6 @@
 package org.gatodev.arcadiaclinica.repository.persons;
 
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalSpecialty;
+import org.gatodev.arcadiaclinica.entity.medical.MedicalSpecialty;
 import org.gatodev.arcadiaclinica.entity.persons.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;

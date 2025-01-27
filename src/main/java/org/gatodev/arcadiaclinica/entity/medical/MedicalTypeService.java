@@ -1,4 +1,4 @@
-package org.gatodev.arcadiaclinica.entity.medical_services;
+package org.gatodev.arcadiaclinica.entity.medical;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,11 +8,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class MedicalSpecialty extends BaseAttributes {
+public class MedicalTypeService extends BaseAttributes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 }
+

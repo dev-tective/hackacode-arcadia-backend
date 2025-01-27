@@ -3,7 +3,6 @@ package org.gatodev.arcadiaclinica.service.persons.impl;
 import org.gatodev.arcadiaclinica.entity.persons.User;
 import org.gatodev.arcadiaclinica.repository.persons.IUserRepository;
 import org.gatodev.arcadiaclinica.service.persons.IUserService;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +39,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean verifyPassword(User user, String rawPassword) {
-        return BCrypt.checkpw(rawPassword, user.getPassword());
+        return passwordEncoder.matches(rawPassword, user.getPassword());
     }
 }

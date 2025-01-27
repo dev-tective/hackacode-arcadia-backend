@@ -4,13 +4,11 @@ import jakarta.validation.Valid;
 import org.gatodev.arcadiaclinica.entity.persons.Staff;
 import org.gatodev.arcadiaclinica.service.persons.IStaffService;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/staff")
-@Validated
 public class StaffController {
     
     private final IStaffService staffService;

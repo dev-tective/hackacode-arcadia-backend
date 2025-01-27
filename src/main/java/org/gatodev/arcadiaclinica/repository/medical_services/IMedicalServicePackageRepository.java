@@ -1,7 +1,7 @@
 package org.gatodev.arcadiaclinica.repository.medical_services;
 
-import org.gatodev.arcadiaclinica.entity.medical_services.MedicalServicePackage;
+import org.gatodev.arcadiaclinica.entity.medical.MedicalServicePackage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IMedicalServicePackageRepository extends JpaRepository<MedicalServicePackage, Integer> {
+public interface IMedicalServicePackageRepository extends JpaRepository<MedicalServicePackage, Long> {
 }
