@@ -1,11 +1,13 @@
 package org.gatodev.arcadiaclinica.service.persons.impl;
 
 import org.gatodev.arcadiaclinica.entity.persons.Client;
+import org.gatodev.arcadiaclinica.entity.persons.Role;
 import org.gatodev.arcadiaclinica.repository.persons.IClientRepository;
 import org.gatodev.arcadiaclinica.service.persons.IClientService;
+import org.gatodev.arcadiaclinica.service.persons.IRoleService;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ClientServiceImpl implements IClientService {
@@ -38,7 +40,7 @@ public class ClientServiceImpl implements IClientService {
     }
 
     @Override
-    public Client getEntityById(UUID id) {
+    public Client getEntityById(long id) {
         return clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Id not found"));
     }
@@ -46,20 +48,5 @@ public class ClientServiceImpl implements IClientService {
     @Override
     public List<Client> getAllEntities() {
         return clientRepository.findAll();
-    }
-
-    @Override
-    public List<Client> getAllClientsByFirstName(String firstName) {
-        return clientRepository.findAllByFirstname(firstName);
-    }
-
-    @Override
-    public List<Client> getAllClientsByLastName(String lastName) {
-        return clientRepository.findAllByLastname(lastName);
-    }
-
-    @Override
-    public List<Client> getAllClientsByFirstNameAndLastName(String firstName, String lastName) {
-        return clientRepository.findAllByFirstnameAndLastname(firstName, lastName);
     }
 }

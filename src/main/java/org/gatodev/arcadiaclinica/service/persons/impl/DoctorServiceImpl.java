@@ -1,11 +1,11 @@
 package org.gatodev.arcadiaclinica.service.persons.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.gatodev.arcadiaclinica.entity.persons.Doctor;
 import org.gatodev.arcadiaclinica.repository.persons.IDoctorRepository;
 import org.gatodev.arcadiaclinica.service.persons.IDoctorService;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class DoctorServiceImpl implements IDoctorService {
@@ -18,66 +18,33 @@ public class DoctorServiceImpl implements IDoctorService {
 
     @Override
     public Doctor addEntity(Doctor person) {
-        return null;
+        verificatePerson(person);
+        return doctorRepository.save(person);
     }
 
     @Override
     public Doctor updateEntity(Doctor person) {
-        return null;
+        if (!doctorRepository.existsById(person.getId())) {
+            throw new EntityNotFoundException("Doctor not found");
+        }
+        verificatePerson(person);
+        return doctorRepository.save(person);
     }
 
     @Override
     public Doctor getEntityByDni(String dni) {
-        return null;
+        return doctorRepository.findByDni(dni)
+                .orElseThrow(() -> new EntityNotFoundException("Doctor with dni " + dni + " not found"));
     }
 
     @Override
-    public Doctor getEntityById(UUID id) {
-        return null;
+    public Doctor getEntityById(long id) {
+        return doctorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Doctor with id " + id + " not found"));
     }
 
     @Override
     public List<Doctor> getAllEntities() {
-        return List.of();
-    }
-
-    @Override
-    public List<Doctor> getAllDoctorsByFirstname(String FirstName) {
-        return doctorRepository.findAllByFirstname(FirstName);
-    }
-
-    @Override
-    public List<Doctor> getAllDoctorsByLastname(String LastName) {
-        return doctorRepository.findAllByLastname(LastName);
-    }
-
-    @Override
-    public List<Doctor> getAllDoctorsByFirstnameAndLastname(String Firstname, String Lastname) {
-        return doctorRepository.findAllByFirstnameAndLastname(Firstname, Lastname);
-    }
-
-    @Override
-    public List<Doctor> getAllDoctorsByMedicalAppointmentIsNull() {
-        return doctorRepository.findAllByMedicalAppointmentsIsNull();
-    }
-
-    @Override
-    public List<Doctor> getAllDoctorsByMedicalAppointmentIsNotNull() {
-        return doctorRepository.findAllByMedicalAppointmentsIsNotNull();
-    }
-
-    @Override
-    public List<Doctor> getAllDoctorsBySpecialty(Integer idSpecialty) {
-        return List.of();
-    }
-
-    @Override
-    public List<Doctor> getAllDoctorsBySpecialtyAndMedicalAppointmentIsNull(Integer idSpecialty) {
-        return List.of();
-    }
-
-    @Override
-    public List<Doctor> getAllDoctorsBySpecialtyAndMedicalAppointmentIsNotNull(Integer idSpecialty) {
-        return null;
+        return doctorRepository.findAll();
     }
 }

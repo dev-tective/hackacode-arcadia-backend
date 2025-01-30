@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalService;
 import org.gatodev.arcadiaclinica.entity.persons.Doctor;
-import org.gatodev.arcadiaclinica.entity.persons.Patient;
+import org.gatodev.arcadiaclinica.entity.persons.Client;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,9 +36,13 @@ public class MedicalAppointment {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Patient patient;
+    private Client patient;
     
     @ManyToOne
     @JoinColumn(nullable = false)
     private Doctor doctor;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Receipt receipt;
 }

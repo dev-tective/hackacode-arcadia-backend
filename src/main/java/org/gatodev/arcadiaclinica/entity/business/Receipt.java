@@ -1,13 +1,14 @@
 package org.gatodev.arcadiaclinica.entity.business;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import jakarta.persistence.*;
-import org.gatodev.arcadiaclinica.entity.persons.Client;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.gatodev.arcadiaclinica.entity.persons.Client;
 
 @Getter
 @Setter
@@ -28,15 +29,13 @@ public class Receipt {
     @Column(nullable = false)
     private Float discount = 0f;
 
-    @OneToOne(targetEntity = MedicalAppointment.class)
-    @JoinColumn(nullable = false)
-    private MedicalAppointment medicalAppointment;
+    @OneToMany(targetEntity = MedicalAppointment.class, mappedBy = "receipt")
+    private List<MedicalAppointment> medicalAppointments;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private TypePayment typePayment;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
     private Client client;
 }

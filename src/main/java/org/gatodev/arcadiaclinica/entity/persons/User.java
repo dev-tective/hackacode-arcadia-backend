@@ -4,15 +4,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.gatodev.arcadiaclinica.entity.IFieldsValidate;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class User extends Person {
+public class User implements IFieldsValidate {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @NotBlank(message = "El email no puede estar vacío.")
+    @Column(unique = true, nullable = false)
+    private String email;
 
     @NotBlank(message = "La contraseña no puede ser vacía.")
     @Column(nullable = false)

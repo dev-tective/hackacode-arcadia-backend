@@ -1,23 +1,21 @@
 package org.gatodev.arcadiaclinica.service.persons;
 
-import jakarta.validation.Valid;
 import org.gatodev.arcadiaclinica.entity.persons.Person;
 import java.util.List;
-import java.util.UUID;
 
 public interface IPersonService<T extends Person> {
-    T addEntity(@Valid T person);
+    T addEntity(T person);
 
     T updateEntity(T person);
 
     T getEntityByDni(String dni);
 
-    T getEntityById(UUID id);
+    T getEntityById(long id);
 
     List<T> getAllEntities();
 
     default void verificatePerson(T person) {
-        if (!person.isValidEmail(person.getEmail())) {
+        if (person.isValidEmail(person.getEmail())) {
             throw new RuntimeException("Invalid email");
         }
         if (!person.isValidDni(person.getDni())) {

@@ -6,6 +6,8 @@ import org.gatodev.arcadiaclinica.service.medical_services.IMedicalTypeServiceSe
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/medical-type-service")
 public class MedicalTypeServiceController {
@@ -17,18 +19,18 @@ public class MedicalTypeServiceController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<List<MedicalTypeService>> getAll() {
         return ResponseEntity.ok(medicalTypeServiceService.getAllMedicalTypeService());
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody MedicalTypeService medicalTypeService) {
+    public ResponseEntity<MedicalTypeService> create(@Valid @RequestBody MedicalTypeService medicalTypeService) {
         return ResponseEntity.ok(medicalTypeServiceService
                 .addMedicalTypeService(medicalTypeService));
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@Valid @RequestBody MedicalTypeService medicalTypeService) {
+    public ResponseEntity<MedicalTypeService> update(@Valid @RequestBody MedicalTypeService medicalTypeService) {
         return ResponseEntity.ok(medicalTypeServiceService
                 .updateMedicalTypeService(medicalTypeService));
     }
