@@ -1,4 +1,4 @@
-package org.gatodev.arcadiaclinica.controller.persons;
+package org.gatodev.arcadiaclinica.controller.auth;
 
 import org.gatodev.arcadiaclinica.DTO.auth.LoginRequest;
 import org.gatodev.arcadiaclinica.entity.persons.User;

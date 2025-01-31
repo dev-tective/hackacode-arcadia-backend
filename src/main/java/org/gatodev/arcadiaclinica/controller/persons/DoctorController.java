@@ -5,6 +5,7 @@ import org.gatodev.arcadiaclinica.service.persons.IDoctorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+//Implementar los DTOS para no enviar entidades infinitas
 @RestController
 @RequestMapping("/doctor")
 public class DoctorController {

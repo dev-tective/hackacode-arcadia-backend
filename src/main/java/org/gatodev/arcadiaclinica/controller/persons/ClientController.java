@@ -6,6 +6,7 @@ import org.gatodev.arcadiaclinica.service.persons.IClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+//Implementar los DTOS para no enviar entidades infinitas y completar el controller
 @RestController
 @RequestMapping("/client")
 public class ClientController {
