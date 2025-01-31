@@ -19,11 +19,11 @@ public class User implements IFieldsValidate {
     private UUID id;
 
     @NotBlank(message = "El email no puede estar vacío.")
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 30)
     private String email;
 
     @NotBlank(message = "La contraseña no puede ser vacía.")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 

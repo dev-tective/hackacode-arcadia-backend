@@ -1,4 +1,4 @@
-package org.gatodev.arcadiaclinica.service.medical_services;
+package org.gatodev.arcadiaclinica.service.medical;
 
 import org.gatodev.arcadiaclinica.DTO.medical.MedicalServiceDTO;
 import org.gatodev.arcadiaclinica.DTO.medical.MedicalServiceWPDTO;

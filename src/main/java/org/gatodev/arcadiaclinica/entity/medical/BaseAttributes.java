@@ -15,11 +15,11 @@ import lombok.Setter;
 @MappedSuperclass
 public class BaseAttributes {
     @NotBlank(message = "El código no puede ser vacío.")
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 3)
     private String code;
 
     @NotBlank(message = "El nombre no puede ser vacío.")
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 30)
     private String name;
 
     @Column(nullable = false)

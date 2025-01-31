@@ -16,6 +16,7 @@ import lombok.Setter;
 @DiscriminatorValue("Package")
 public class MedicalServicePackage extends MedicalService {
     private LocalDate available = LocalDate.now();
+
     private LocalDate notAvailable = LocalDate.now().plusMonths(1);
 
     @ManyToMany(mappedBy = "medicalServicePackages")

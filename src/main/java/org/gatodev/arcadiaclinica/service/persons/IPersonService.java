@@ -12,6 +12,10 @@ public interface IPersonService<T extends Person> {
 
     T getEntityById(long id);
 
+    void deactivateEntity(long id);
+
+    void activateEntity(long id);
+
     List<T> getAllEntities();
 
     default void verificatePerson(T person) {

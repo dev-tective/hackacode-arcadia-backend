@@ -3,7 +3,6 @@ package org.gatodev.arcadiaclinica.entity.medical;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -25,7 +24,7 @@ public class MedicalService extends BaseAttributes {
     private Long id;
 
     @NotBlank(message = "La descripción no puede ser vacía.")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String description;
 
     @Column(nullable = false)

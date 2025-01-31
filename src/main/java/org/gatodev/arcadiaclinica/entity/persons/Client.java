@@ -19,6 +19,7 @@ public class Client extends Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 40)
     private String allergies;
 
     private Integer age;
@@ -31,4 +32,12 @@ public class Client extends Person {
 
     @OneToMany(targetEntity = MedicalAppointment.class, mappedBy = "patient")
     private List<MedicalAppointment> medicalAppointments;
+
+    public void validateAge() {
+        if (age != null) {
+            if (age < 0) {
+                throw new IllegalArgumentException("Age must be a positive integer");
+            }
+        }
+    }
 }

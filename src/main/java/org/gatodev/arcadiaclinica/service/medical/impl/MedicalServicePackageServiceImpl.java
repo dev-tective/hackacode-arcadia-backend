@@ -1,11 +1,11 @@
-package org.gatodev.arcadiaclinica.service.medical_services.impl;
+package org.gatodev.arcadiaclinica.service.medical.impl;
 
 import org.gatodev.arcadiaclinica.DTO.medical.MedicalServiceMapper;
 import org.gatodev.arcadiaclinica.DTO.medical.MedicalServicePackageDTO;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalService;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalServicePackage;
 import org.gatodev.arcadiaclinica.repository.medical_services.IMedicalServicePackageRepository;
-import org.gatodev.arcadiaclinica.service.medical_services.IMedicalServicePackageService;
+import org.gatodev.arcadiaclinica.service.medical.IMedicalServicePackageService;
 import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.util.List;

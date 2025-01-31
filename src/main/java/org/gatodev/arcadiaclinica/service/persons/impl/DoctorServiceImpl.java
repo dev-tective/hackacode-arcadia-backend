@@ -5,6 +5,8 @@ import org.gatodev.arcadiaclinica.entity.persons.Doctor;
 import org.gatodev.arcadiaclinica.repository.persons.IDoctorRepository;
 import org.gatodev.arcadiaclinica.service.persons.IDoctorService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -41,6 +43,22 @@ public class DoctorServiceImpl implements IDoctorService {
     public Doctor getEntityById(long id) {
         return doctorRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Doctor with id " + id + " not found"));
+    }
+
+    @Transactional
+    @Override
+    public void deactivateEntity(long id) {
+        Doctor doctor = getEntityById(id);
+        doctor.setEnabled(false);
+        doctorRepository.save(doctor);
+    }
+
+    @Transactional
+    @Override
+    public void activateEntity(long id) {
+        Doctor doctor = getEntityById(id);
+        doctor.setEnabled(true);
+        doctorRepository.save(doctor);
     }
 
     @Override

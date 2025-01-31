@@ -20,6 +20,7 @@ public class ClientServiceImpl implements IClientService {
 
     @Override
     public Client addEntity(Client person) {
+        person.validateAge();
         verificatePerson(person);
         return clientRepository.save(person);
     }
@@ -29,6 +30,7 @@ public class ClientServiceImpl implements IClientService {
         if (!clientRepository.existsById(person.getId())) {
             throw new RuntimeException("Client with id " + person.getId() + " not found");
         }
+        person.validateAge();
         verificatePerson(person);
         return clientRepository.save(person);
     }

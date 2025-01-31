@@ -1,4 +1,4 @@
-package org.gatodev.arcadiaclinica.service.medical_services.impl;
+package org.gatodev.arcadiaclinica.service.medical.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.gatodev.arcadiaclinica.DTO.medical.MedicalServiceDTO;
@@ -9,9 +9,8 @@ import org.gatodev.arcadiaclinica.entity.medical.MedicalServicePackage;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalSpecialty;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalTypeService;
 import org.gatodev.arcadiaclinica.repository.medical_services.IMedicalServiceRepository;
-import org.gatodev.arcadiaclinica.service.medical_services.IMedicalServicePackageService;
-import org.gatodev.arcadiaclinica.service.medical_services.IMedicalServiceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.gatodev.arcadiaclinica.service.medical.IMedicalServicePackageService;
+import org.gatodev.arcadiaclinica.service.medical.IMedicalServiceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -62,9 +61,8 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
         List<MedicalServicePackage> msp = medicalService.getMedicalServicePackages();
 
         if (msp != null && !msp.isEmpty()) {
-            msp.forEach(packageService -> {
-                medicalServicePackageService.deactivateMedicalServicePackageById(packageService.getId());
-            });
+            msp.forEach(ps ->
+                    medicalServicePackageService.deactivateMedicalServicePackageById(ps.getId()));
         }
 
         medicalServiceRepository.save(medicalService);
@@ -79,9 +77,8 @@ public class MedicalServiceServiceImpl implements IMedicalServiceService {
         List<MedicalServicePackage> msp = medicalService.getMedicalServicePackages();
 
         if (msp != null && !msp.isEmpty()) {
-            msp.forEach(packageService -> {
-                medicalServicePackageService.activateMedicalServicePackageById(packageService.getId());
-            });
+            msp.forEach(ps ->
+                    medicalServicePackageService.activateMedicalServicePackageById(ps.getId()));
         }
 
         medicalServiceRepository.save(medicalService);

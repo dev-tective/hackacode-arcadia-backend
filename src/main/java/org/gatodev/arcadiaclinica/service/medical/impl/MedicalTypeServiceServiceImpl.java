@@ -1,10 +1,10 @@
-package org.gatodev.arcadiaclinica.service.medical_services.impl;
+package org.gatodev.arcadiaclinica.service.medical.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalTypeService;
 import org.gatodev.arcadiaclinica.repository.medical_services.IMedicalTypeServiceRepository;
-import org.gatodev.arcadiaclinica.service.medical_services.IMedicalServiceService;
-import org.gatodev.arcadiaclinica.service.medical_services.IMedicalTypeServiceService;
+import org.gatodev.arcadiaclinica.service.medical.IMedicalServiceService;
+import org.gatodev.arcadiaclinica.service.medical.IMedicalTypeServiceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

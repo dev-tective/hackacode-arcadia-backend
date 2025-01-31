@@ -18,15 +18,15 @@ public class Person implements IFieldsValidate {
     private String dni;
 
     @NotBlank(message = "El nombre no puede ser vacío.")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String firstname;
 
     @NotBlank(message = "El apellido no puede ser vacío.")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String lastname;
 
     @NotBlank(message = "El email no puede ser vacío.")
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 30)
     private String email;
 
     @Column(nullable = false)
@@ -34,6 +34,9 @@ public class Person implements IFieldsValidate {
 
     @Column(length = 9)
     private String numberPhone;
+
+    @Column(length = 20)
     private String address;
+
     private LocalDate birthDate;
 }

@@ -1,6 +1,7 @@
 package org.gatodev.arcadiaclinica.service.persons.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.gatodev.arcadiaclinica.DTO.auth.UpdateRequest;
 import org.gatodev.arcadiaclinica.entity.persons.Role;
 import org.gatodev.arcadiaclinica.entity.persons.User;
 import org.gatodev.arcadiaclinica.repository.persons.IUserRepository;
@@ -46,15 +47,31 @@ public class UserServiceImpl implements IUserService {
         return userRepository.save(user);
     }
 
+    @Transactional
     @Override
-    public User updateUser(User user) {
-        if (user.isValidEmail(user.getEmail())) {
+    public User updateUserEmail(UUID id, UpdateRequest request) {
+        if (request.oldField().equals(request.newField())) {
+            throw new IllegalArgumentException("Emails cannot be the same");
+        }
+        if (request.isValidEmail(request.oldField()) && request.isValidEmail(request.newField())) {
             throw new RuntimeException("Invalid email");
         }
-        if (!userRepository.existsById(user.getId())) {
-            throw new EntityNotFoundException("User not found");
+        User user = getUserById(id);
+        if (!request.oldField().equals(user.getEmail())){
+            throw new IllegalArgumentException("Emails not match");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEmail(request.newField());
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    @Override
+    public User updateUserPassword(UUID id, UpdateRequest request) {
+        User user = getUserById(id);
+        if (verifyPassword(user, request.oldField())) {
+            throw new RuntimeException("Passwords do not match");
+        }
+        user.setPassword(passwordEncoder.encode(request.newField()));
         return userRepository.save(user);
     }
 
@@ -71,11 +88,23 @@ public class UserServiceImpl implements IUserService {
                 .orElseThrow(() -> new EntityNotFoundException("User with email " + email + " not found"));
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     @Transactional
     @Override
-    public void deactivateUser(User user) {
-        User deleteUser = getUserById(user.getId());
+    public void deactivateUser(UUID id) {
+        User deleteUser = getUserById(id);
         deleteUser.setEnabled(false);
+    }
+
+    @Transactional
+    @Override
+    public void activateUser(UUID id) {
+        User activateUser = getUserById(id);
+        activateUser.setEnabled(true);
     }
 
     @Override
@@ -86,12 +115,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void encryptPassword(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-    }
-
-    @Override
     public boolean verifyPassword(User user, String rawPassword) {
-        return passwordEncoder.matches(rawPassword, user.getPassword());
+        return !passwordEncoder.matches(rawPassword, user.getPassword());
     }
 }

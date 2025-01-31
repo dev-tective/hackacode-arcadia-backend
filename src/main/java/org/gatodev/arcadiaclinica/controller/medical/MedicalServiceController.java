@@ -2,7 +2,7 @@ package org.gatodev.arcadiaclinica.controller.medical;
 
 import jakarta.validation.Valid;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalService;
-import org.gatodev.arcadiaclinica.service.medical_services.IMedicalServiceService;
+import org.gatodev.arcadiaclinica.service.medical.IMedicalServiceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,5 @@
 package org.gatodev.arcadiaclinica.controller.persons;
 
-import jakarta.validation.Valid;
 import org.gatodev.arcadiaclinica.DTO.auth.LoginRequest;
 import org.gatodev.arcadiaclinica.entity.persons.User;
 import org.gatodev.arcadiaclinica.service.persons.IUserService;
@@ -17,19 +16,18 @@ public class AuthenticationController {
         this.userService = userService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest) {
+    @PostMapping
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         User user = userService.getUserByEmail(loginRequest.email());
 
-        if (!userService.verifyPassword(user, loginRequest.password())) {
+        if (!user.getEnabled()) {
+            return ResponseEntity.status(403).build();
+        }
+
+        if (userService.verifyPassword(user, loginRequest.password())) {
             throw new IllegalArgumentException("Invalid credentials");
         }
 
         return ResponseEntity.ok(user);
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody User user) {
-        return ResponseEntity.ok(userService.addUser(user));
     }
 }

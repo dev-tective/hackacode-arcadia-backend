@@ -1,9 +1,9 @@
-package org.gatodev.arcadiaclinica.service.medical_services.impl;
+package org.gatodev.arcadiaclinica.service.medical.impl;
 
 import org.gatodev.arcadiaclinica.entity.medical.MedicalSpecialty;
 import org.gatodev.arcadiaclinica.repository.medical_services.IMedicalSpecialtyRepository;
-import org.gatodev.arcadiaclinica.service.medical_services.IMedicalServiceService;
-import org.gatodev.arcadiaclinica.service.medical_services.IMedicalSpecialtyService;
+import org.gatodev.arcadiaclinica.service.medical.IMedicalServiceService;
+import org.gatodev.arcadiaclinica.service.medical.IMedicalSpecialtyService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
