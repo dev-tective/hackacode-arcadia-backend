@@ -1,54 +1,74 @@
 package org.gatodev.arcadiaclinica.service.persons.impl;
 
+import jakarta.persistence.EntityNotFoundException;
+import org.gatodev.arcadiaclinica.DTO.persons.ClientDTO;
+import org.gatodev.arcadiaclinica.DTO.persons.FullClientDTO;
 import org.gatodev.arcadiaclinica.entity.persons.Client;
-import org.gatodev.arcadiaclinica.entity.persons.Role;
 import org.gatodev.arcadiaclinica.repository.persons.IClientRepository;
 import org.gatodev.arcadiaclinica.service.persons.IClientService;
-import org.gatodev.arcadiaclinica.service.persons.IRoleService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ClientServiceImpl implements IClientService {
 
     private final IClientRepository clientRepository;
+    private final ModelMapper modelMapper;
 
-    public ClientServiceImpl(IClientRepository clientRepository) {
+    public ClientServiceImpl(IClientRepository clientRepository, ModelMapper modelMapper) {
         this.clientRepository = clientRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public Client addEntity(Client person) {
-        person.validateAge();
-        verificatePerson(person);
-        return clientRepository.save(person);
+    public Client addClient(Client client) {
+        return clientRepository.save(client);
     }
 
     @Override
-    public Client updateEntity(Client person) {
-        if (!clientRepository.existsById(person.getId())) {
-            throw new RuntimeException("Client with id " + person.getId() + " not found");
-        }
-        person.validateAge();
-        verificatePerson(person);
-        return clientRepository.save(person);
+    public Client updateClient(ClientDTO client) {
+        return clientRepository.save(modelMapper.map(client, Client.class));
     }
 
     @Override
-    public Client getEntityByDni(String dni) {
-        return clientRepository.findByDni(dni)
-                .orElseThrow(() -> new RuntimeException("Dni not found"));
-    }
-
-    @Override
-    public Client getEntityById(long id) {
+    public Client getClientById(long id) {
         return clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Id not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
     }
 
     @Override
-    public List<Client> getAllEntities() {
+    public Client getClientByDni(String dni) {
+        return clientRepository.findByAttributes_Dni(dni)
+                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
+    }
+
+    @Override
+    public void deactivateClient(long id) {
+        Client client = getClientById(id);
+        client.setEnabled(false);
+        clientRepository.save(client);
+    }
+
+    @Override
+    public void activateClient(long id) {
+        Client client = getClientById(id);
+        client.setEnabled(true);
+        clientRepository.save(client);
+    }
+
+    @Override
+    public List<Client> getClients() {
         return clientRepository.findAll();
+    }
+
+    @Override
+    public ClientDTO getClientDTO(Client client) {
+        return modelMapper.map(client, ClientDTO.class);
+    }
+
+    @Override
+    public FullClientDTO getFullClientDTO(Client client) {
+        return modelMapper.map(client, FullClientDTO.class);
     }
 }

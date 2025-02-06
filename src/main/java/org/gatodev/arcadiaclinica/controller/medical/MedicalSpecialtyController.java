@@ -5,7 +5,6 @@ import org.gatodev.arcadiaclinica.entity.medical.MedicalSpecialty;
 import org.gatodev.arcadiaclinica.service.medical.IMedicalSpecialtyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,13 +18,13 @@ public class MedicalSpecialtyController {
     }
 
     @PostMapping
-    public ResponseEntity<MedicalSpecialty> save(@Valid @RequestBody MedicalSpecialty medicalSpecialty) {
-        return ResponseEntity.ok(medicalSpecialtyService.addMedicalSpecialty(medicalSpecialty));
+    public ResponseEntity<MedicalSpecialty> save(@Valid @RequestBody MedicalSpecialty ms) {
+        return ResponseEntity.ok(medicalSpecialtyService.addMedicalSpecialty(ms));
     }
 
     @PutMapping
-    public ResponseEntity<MedicalSpecialty> update(@Valid @RequestBody MedicalSpecialty medicalSpecialty) {
-        return ResponseEntity.ok(medicalSpecialtyService.updateMedicalSpecialty(medicalSpecialty));
+    public ResponseEntity<MedicalSpecialty> update(@Valid @RequestBody MedicalSpecialty ms) {
+        return ResponseEntity.ok(medicalSpecialtyService.updateMedicalSpecialty(ms));
     }
 
     @GetMapping

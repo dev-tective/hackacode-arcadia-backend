@@ -1,7 +1,6 @@
 package org.gatodev.arcadiaclinica.entity.business;
 
 import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalService;
 import org.gatodev.arcadiaclinica.entity.persons.Doctor;
@@ -22,13 +21,13 @@ public class MedicalAppointment {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime attentionDate = LocalDateTime.now();
+    private LocalDateTime attentionDate;
 
     @Column(nullable = false)
-    private LocalDateTime appointmentStart = LocalDateTime.now().plusMinutes(30);
+    private LocalDateTime appointmentStart;
 
     @Column(nullable = false)
-    private LocalDateTime appointmentEnd = LocalDateTime.now().plusHours(1).plusMinutes(30);
+    private LocalDateTime appointmentEnd;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -41,8 +40,4 @@ public class MedicalAppointment {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Doctor doctor;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Receipt receipt;
 }

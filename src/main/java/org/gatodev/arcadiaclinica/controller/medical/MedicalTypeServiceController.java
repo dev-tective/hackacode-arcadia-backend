@@ -23,15 +23,13 @@ public class MedicalTypeServiceController {
     }
 
     @PostMapping
-    public ResponseEntity<MedicalTypeService> create(@Valid @RequestBody MedicalTypeService medicalTypeService) {
-        return ResponseEntity.ok(medicalTypeServiceService
-                .addMedicalTypeService(medicalTypeService));
+    public ResponseEntity<MedicalTypeService> create(@Valid @RequestBody MedicalTypeService mts) {
+        return ResponseEntity.ok((medicalTypeServiceService.addMedicalTypeService(mts)));
     }
 
     @PutMapping
-    public ResponseEntity<MedicalTypeService> update(@Valid @RequestBody MedicalTypeService medicalTypeService) {
-        return ResponseEntity.ok(medicalTypeServiceService
-                .updateMedicalTypeService(medicalTypeService));
+    public ResponseEntity<MedicalTypeService> update(@Valid @RequestBody MedicalTypeService mts) {
+        return ResponseEntity.ok(medicalTypeServiceService.updateMedicalTypeService(mts));
     }
 
     @PatchMapping("/{id}/deactivate")

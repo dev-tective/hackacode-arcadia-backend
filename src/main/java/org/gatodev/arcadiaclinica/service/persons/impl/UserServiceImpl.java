@@ -2,6 +2,7 @@ package org.gatodev.arcadiaclinica.service.persons.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.gatodev.arcadiaclinica.DTO.auth.UpdateRequest;
+import org.gatodev.arcadiaclinica.entity.persons.Person;
 import org.gatodev.arcadiaclinica.entity.persons.Role;
 import org.gatodev.arcadiaclinica.entity.persons.User;
 import org.gatodev.arcadiaclinica.repository.persons.IUserRepository;
@@ -34,7 +35,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User addUser(User user) {
-        if (user.isValidEmail(user.getEmail())) {
+        if (Person.isValidEmail(user.getEmail())) {
             throw new RuntimeException("Invalid email");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -53,7 +54,8 @@ public class UserServiceImpl implements IUserService {
         if (request.oldField().equals(request.newField())) {
             throw new IllegalArgumentException("Emails cannot be the same");
         }
-        if (request.isValidEmail(request.oldField()) && request.isValidEmail(request.newField())) {
+        if (Person.isValidEmail(request.oldField()) &&
+                Person.isValidEmail(request.newField())) {
             throw new RuntimeException("Invalid email");
         }
         User user = getUserById(id);

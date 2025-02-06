@@ -1,7 +1,5 @@
 package org.gatodev.arcadiaclinica.service.medical;
 
-import org.gatodev.arcadiaclinica.DTO.medical.MedicalServiceDTO;
-import org.gatodev.arcadiaclinica.DTO.medical.MedicalServiceWPDTO;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalService;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalSpecialty;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalTypeService;
@@ -18,13 +16,11 @@ public interface IMedicalServiceService {
 
     void activateMedicalServiceById(Long id);
 
+    void existMedicalService(String name, String code);
+
     List<MedicalService> getAllMedicalService();
 
-    MedicalServiceDTO convertToDTO(MedicalService medicalService);
+    void changeStateByMedicalTypeService(MedicalTypeService mts, boolean state);
 
-    MedicalServiceWPDTO convertToWPDTO(MedicalService medicalService);
-
-    void changeStateByMedicalTypeService(MedicalTypeService medicalTypeService, boolean state);
-
-    void changeStateByMedicalSpecialty(MedicalSpecialty medicalSpecialty, boolean state);
+    void changeStateByMedicalSpecialty(MedicalSpecialty ms, boolean state);
 }

@@ -6,7 +6,6 @@ import org.gatodev.arcadiaclinica.service.persons.IClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-//Implementar los DTOS para no enviar entidades infinitas y completar el controller
 @RestController
 @RequestMapping("/client")
 public class ClientController {
@@ -19,16 +18,18 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody Client client) {
-        return ResponseEntity.ok(clientService.addEntity(client));
+        return ResponseEntity.ok(clientService.getClientDTO(clientService.addClient(client)));
     }
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(clientService.getAllEntities());
+        return ResponseEntity.ok(clientService.getClients().stream()
+                .map(clientService::getFullClientDTO)
+                .toList());
     }
 
     @GetMapping("dni/{dni}")
     public ResponseEntity<?> getById(@PathVariable String dni) {
-        return ResponseEntity.ok(clientService.getEntityByDni(dni));
+        return ResponseEntity.ok(clientService.getFullClientDTO(clientService.getClientByDni(dni)));
     }
 }

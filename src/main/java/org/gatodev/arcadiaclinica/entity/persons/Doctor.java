@@ -3,6 +3,7 @@ package org.gatodev.arcadiaclinica.entity.persons;
 import java.time.LocalTime;
 import java.util.List;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.gatodev.arcadiaclinica.entity.business.MedicalAppointment;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalSpecialty;
 import lombok.AllArgsConstructor;
@@ -21,23 +22,28 @@ public class Doctor extends Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(nullable = false)
     private LocalTime entranceWork;
 
+    @NotNull
     @Column(nullable = false)
     private LocalTime exitWork;
 
+    @NotNull
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private DayOff dayOff = DayOff.SUNDAY;
+    private DayOff dayOff;
 
+    @NotNull
     @Column(nullable = false)
-    private Float salary = 1125.0f;
+    private Float salary;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(nullable = false)
     private MedicalSpecialty medicalSpecialty;
-    
+
     @OneToMany(mappedBy = "doctor", targetEntity = MedicalAppointment.class)
     private List<MedicalAppointment> medicalAppointments;
 }

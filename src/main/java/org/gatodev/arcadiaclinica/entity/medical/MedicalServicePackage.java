@@ -13,12 +13,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@DiscriminatorValue("Package")
-public class MedicalServicePackage extends MedicalService {
-    private LocalDate available = LocalDate.now();
+public class MedicalServicePackage extends MedicalAttributes {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private LocalDate notAvailable = LocalDate.now().plusMonths(1);
+    @Column(nullable = false)
+    private LocalDate available;
 
-    @ManyToMany(mappedBy = "medicalServicePackages")
+    @Column(nullable = false)
+    private LocalDate notAvailable;
+
+    @ManyToMany
     private List<MedicalService> medicalServices;
 }

@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface IDoctorRepository extends JpaRepository<Doctor, Long> {
     Optional<Doctor> findByDni(String dni);
+
+    boolean existsByAttributes_DniOrAttributes_Email(String attributesDni, String attributesEmail);
 }

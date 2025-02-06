@@ -12,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class MedicalSpecialty extends BaseAttributes {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 }

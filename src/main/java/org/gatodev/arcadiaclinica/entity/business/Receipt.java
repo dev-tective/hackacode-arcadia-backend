@@ -1,8 +1,8 @@
 package org.gatodev.arcadiaclinica.entity.business;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,21 +21,20 @@ public class Receipt {
     private Long id;
 
     @Column(nullable = false)
-    private Boolean paymentReceived;
+    private Boolean paymentReceived = false;
 
-    @Column(nullable = false)
-    private BigDecimal amount;
+    private LocalDateTime datePaid;
 
-    @Column(nullable = false)
-    private Float discount = 0f;
+    private BigDecimal amount = BigDecimal.ZERO;
 
-    @OneToMany(targetEntity = MedicalAppointment.class, mappedBy = "receipt")
-    private List<MedicalAppointment> medicalAppointments;
+    private Float discount;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
     private TypePayment typePayment;
 
     @ManyToOne
     private Client client;
+
+    @OneToMany(targetEntity = MedicalAppointment.class)
+    private List<MedicalAppointment> medicalAppointments;
 }

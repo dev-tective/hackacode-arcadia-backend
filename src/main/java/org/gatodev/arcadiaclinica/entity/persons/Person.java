@@ -1,42 +1,74 @@
 package org.gatodev.arcadiaclinica.entity.persons;
 
-import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
-import org.gatodev.arcadiaclinica.entity.IFieldsValidate;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @MappedSuperclass
-public class Person implements IFieldsValidate {
-    @NotBlank(message = "El dni no puede ser vacío.")
+public class Person {
+    @NotNull @NotBlank
     @Column(nullable = false, unique = true, length = 8)
     private String dni;
 
-    @NotBlank(message = "El nombre no puede ser vacío.")
+    @NotNull @NotBlank
     @Column(nullable = false, length = 30)
     private String firstname;
 
-    @NotBlank(message = "El apellido no puede ser vacío.")
+    @NotNull @NotBlank
     @Column(nullable = false, length = 30)
     private String lastname;
 
-    @NotBlank(message = "El email no puede ser vacío.")
-    @Column(nullable = false, unique = true, length = 30)
+    @Column(unique = true, length = 30)
     private String email;
 
     @Column(nullable = false)
-    private Boolean enabled = true;
+    private Boolean enabled;
 
     @Column(length = 9)
     private String numberPhone;
 
-    @Column(length = 20)
+    @Column(length = 50)
     private String address;
 
     private LocalDate birthDate;
+
+    public static boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
+    }
+
+    public static boolean isValidDni(String dni) {
+        if (dni.length() != 8) return false;
+        try {
+            Long.parseLong(dni);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isValidNumberPhone(String numberPhone) {
+        if (numberPhone.length() != 9) return false;
+        if (numberPhone.charAt(0) != '9') return false;
+        try {
+            Long.parseLong(numberPhone);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public void isEnabled() {
+        if (!enabled) {
+            throw new RuntimeException("Person not enabled");
+        }
+    }
 }

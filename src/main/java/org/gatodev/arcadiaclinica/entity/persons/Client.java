@@ -22,6 +22,7 @@ public class Client extends Person {
     @Column(length = 40)
     private String allergies;
 
+    @Column(length = 3)
     private Integer age;
 
     @Column(nullable = false)
@@ -32,12 +33,4 @@ public class Client extends Person {
 
     @OneToMany(targetEntity = MedicalAppointment.class, mappedBy = "patient")
     private List<MedicalAppointment> medicalAppointments;
-
-    public void validateAge() {
-        if (age != null) {
-            if (age < 0) {
-                throw new IllegalArgumentException("Age must be a positive integer");
-            }
-        }
-    }
 }

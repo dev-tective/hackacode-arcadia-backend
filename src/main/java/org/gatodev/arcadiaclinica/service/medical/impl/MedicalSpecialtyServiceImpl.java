@@ -1,14 +1,18 @@
 package org.gatodev.arcadiaclinica.service.medical.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalSpecialty;
 import org.gatodev.arcadiaclinica.repository.medical_services.IMedicalSpecialtyRepository;
 import org.gatodev.arcadiaclinica.service.medical.IMedicalServiceService;
 import org.gatodev.arcadiaclinica.service.medical.IMedicalSpecialtyService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
+@Qualifier("medicalSpecialty")
 public class MedicalSpecialtyServiceImpl implements IMedicalSpecialtyService {
 
     private final IMedicalServiceService medicalServiceService;
@@ -23,25 +27,26 @@ public class MedicalSpecialtyServiceImpl implements IMedicalSpecialtyService {
     }
 
     @Override
-    public MedicalSpecialty addMedicalSpecialty(MedicalSpecialty ms) {
-        ms.validateCode();
-        return medicalSpecialtyRepository.save(ms);
+    public MedicalSpecialty addMedicalSpecialty(MedicalSpecialty category) {
+        if (medicalSpecialtyRepository.existsByName(category.getName())) {
+            throw new IllegalArgumentException("MedicalSpecialty name already exists");
+        }
+        return medicalSpecialtyRepository.save(category);
     }
 
-    @Transactional
     @Override
-    public MedicalSpecialty updateMedicalSpecialty(MedicalSpecialty ms) {
-        existMedicalSpecialtyById(ms.getId());
-        ms.validateCode();
-        ms.setState(true);
-        return medicalSpecialtyRepository.save(ms);
+    public MedicalSpecialty updateMedicalSpecialty(MedicalSpecialty category) {
+        if (!medicalSpecialtyRepository.existsById(category.getId())) {
+            throw new RuntimeException("MedicalSpecialty does not exist");
+        }
+        category.setState(true);
+        return medicalSpecialtyRepository.save(category);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public MedicalSpecialty getMedicalSpecialtyById(Long id) {
         return medicalSpecialtyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Medical Specialty not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Medical Specialty Not Found"));
     }
 
     @Transactional
@@ -49,8 +54,8 @@ public class MedicalSpecialtyServiceImpl implements IMedicalSpecialtyService {
     public void deactivateMedicalSpecialtyById(Long id) {
         MedicalSpecialty ms = getMedicalSpecialtyById(id);
         ms.setState(false);
-        medicalSpecialtyRepository.save(ms);
         medicalServiceService.changeStateByMedicalSpecialty(ms, false);
+        medicalSpecialtyRepository.save(ms);
     }
 
     @Transactional
@@ -58,19 +63,10 @@ public class MedicalSpecialtyServiceImpl implements IMedicalSpecialtyService {
     public void activateMedicalSpecialtyById(Long id) {
         MedicalSpecialty ms = getMedicalSpecialtyById(id);
         ms.setState(true);
-        medicalSpecialtyRepository.save(ms);
         medicalServiceService.changeStateByMedicalSpecialty(ms, true);
+        medicalSpecialtyRepository.save(ms);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public void existMedicalSpecialtyById(Long id) {
-        if (!medicalSpecialtyRepository.existsById(id)) {
-            throw new RuntimeException("Medical Specialty Not Found");
-        }
-    }
-
-    @Transactional(readOnly = true)
     @Override
     public List<MedicalSpecialty> getAllMedicalSpecialty() {
         return medicalSpecialtyRepository.findAll();
