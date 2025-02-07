@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public record MedicalServiceRequest(
+        Long id,
+
         @NotNull(message = "El ID del tipo de servicio médico no puede ser nulo.")
         Long idMedicalTypeService,
 

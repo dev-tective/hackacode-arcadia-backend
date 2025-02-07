@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.gatodev.arcadiaclinica.util.enums.DayOff;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
 @Setter
@@ -39,11 +40,7 @@ public class Doctor extends Person {
     @Column(nullable = false)
     private Float salary;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(nullable = false)
     private MedicalSpecialty medicalSpecialty;
-
-    @OneToMany(mappedBy = "doctor", targetEntity = MedicalAppointment.class)
-    private List<MedicalAppointment> medicalAppointments;
 }

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @Repository
 public interface IClientRepository extends JpaRepository<Client, Long> {
-    Optional<Client> findByAttributes_Dni(String dni);
+    Optional<Client> findByDni(String dni);
 
-    boolean existsByAttributes_DniOrAttributes_Email(String attributesDni, String attributesEmail);
+    boolean existsByDniOrEmail(String dni, String email);
 }

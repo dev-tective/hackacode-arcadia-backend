@@ -2,7 +2,7 @@ package org.gatodev.arcadiaclinica.controller.medical;
 
 import jakarta.validation.Valid;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalTypeService;
-import org.gatodev.arcadiaclinica.service.medical.IMedicalTypeServiceService;
+import org.gatodev.arcadiaclinica.service.medical.IMedicalTypeServiceS;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -11,36 +11,29 @@ import java.util.List;
 @RequestMapping("/medical-type-service")
 public class MedicalTypeServiceController {
 
-    private final IMedicalTypeServiceService medicalTypeServiceService;
+    private final IMedicalTypeServiceS medicalTypeServiceS;
 
-    public MedicalTypeServiceController(IMedicalTypeServiceService medicalTypeServiceService) {
-        this.medicalTypeServiceService = medicalTypeServiceService;
+    public MedicalTypeServiceController(IMedicalTypeServiceS medicalTypeServiceS) {
+        this.medicalTypeServiceS = medicalTypeServiceS;
     }
 
     @GetMapping
-    public ResponseEntity<List<MedicalTypeService>> getAll() {
-        return ResponseEntity.ok(medicalTypeServiceService.getAllMedicalTypeService());
+    public ResponseEntity<List<MedicalTypeService>> getAllMedicalTypeServices() {
+        return ResponseEntity.ok(medicalTypeServiceS.getAllMedicalTypeServices());
     }
 
-    @PostMapping
-    public ResponseEntity<MedicalTypeService> create(@Valid @RequestBody MedicalTypeService mts) {
-        return ResponseEntity.ok((medicalTypeServiceService.addMedicalTypeService(mts)));
+    @GetMapping("/{id}")
+    public ResponseEntity<MedicalTypeService> getMedicalTypeServiceById(@PathVariable long id) {
+        return ResponseEntity.ok(medicalTypeServiceS.getMedicalTypeServiceById(id));
+    }
+
+    @PostMapping()
+    public ResponseEntity<MedicalTypeService> addMedicalTypeService(@Valid @RequestBody MedicalTypeService mts) {
+        return ResponseEntity.ok(medicalTypeServiceS.addMedicalTypeService(mts));
     }
 
     @PutMapping
-    public ResponseEntity<MedicalTypeService> update(@Valid @RequestBody MedicalTypeService mts) {
-        return ResponseEntity.ok(medicalTypeServiceService.updateMedicalTypeService(mts));
-    }
-
-    @PatchMapping("/{id}/deactivate")
-    public ResponseEntity<?> deactivate(@PathVariable Long id) {
-        medicalTypeServiceService.deactivateMedicalTypeServiceById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PatchMapping("/{id}/activate")
-    public ResponseEntity<?> activate(@PathVariable Long id) {
-        medicalTypeServiceService.activateMedicalTypeServiceById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<MedicalTypeService> updateMedicalTypeService(@Valid @RequestBody MedicalTypeService mts) {
+        return ResponseEntity.ok(medicalTypeServiceS.updateMedicalTypeService(mts));
     }
 }

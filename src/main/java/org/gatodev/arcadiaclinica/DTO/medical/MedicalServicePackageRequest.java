@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record MedicalServicePackageRequest(
+        Long id,
+
         @NotNull(message = "El nombre del servicio no puede ser nulo.")
         @NotBlank(message = "El nombre del servicio no puede estar vacío.")
         String name,

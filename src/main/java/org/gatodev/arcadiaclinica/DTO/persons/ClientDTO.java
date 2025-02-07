@@ -1,12 +1,10 @@
 package org.gatodev.arcadiaclinica.DTO.persons;
 
 import lombok.*;
-import org.gatodev.arcadiaclinica.entity.persons.Person;
+import org.gatodev.arcadiaclinica.entity.persons.Client;
 
 @Getter
 @Setter
-public class ClientDTO extends Person {
-    private String allergies;
-    private Integer age;
-    private Boolean healthInsurance;
+public class ClientDTO {
+    private Client client;
 }

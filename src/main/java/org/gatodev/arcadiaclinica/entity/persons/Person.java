@@ -25,11 +25,12 @@ public class Person {
     @Column(nullable = false, length = 30)
     private String lastname;
 
+    @NotNull @NotBlank
     @Column(unique = true, length = 30)
     private String email;
 
     @Column(nullable = false)
-    private Boolean enabled;
+    private Boolean enabled = true;
 
     @Column(length = 9)
     private String numberPhone;
@@ -69,6 +70,18 @@ public class Person {
     public void isEnabled() {
         if (!enabled) {
             throw new RuntimeException("Person not enabled");
+        }
+    }
+
+    public void validateFields(String email, String dni, String numberPhone) {
+        if (email != null && !Person.isValidEmail(email)) {
+            throw new IllegalArgumentException("El email es invalido.");
+        }
+        if (!Person.isValidDni(dni)) {
+            throw new IllegalArgumentException("El dni es invalido.");
+        }
+        if (numberPhone != null && !Person.isValidNumberPhone(numberPhone)) {
+            throw new IllegalArgumentException("El numero de teléfono es invalido.");
         }
     }
 }

@@ -4,15 +4,15 @@ import org.gatodev.arcadiaclinica.entity.medical.MedicalSpecialty;
 import java.util.List;
 
 public interface IMedicalSpecialtyService {
-    MedicalSpecialty addMedicalSpecialty(MedicalSpecialty category);
+    MedicalSpecialty addMedicalSpecialty(MedicalSpecialty medicalSpecialty);
 
-    MedicalSpecialty updateMedicalSpecialty(MedicalSpecialty category);
+    MedicalSpecialty updateMedicalSpecialty(MedicalSpecialty medicalSpecialty);
 
-    MedicalSpecialty getMedicalSpecialtyById(Long id);
+    MedicalSpecialty getMedicalSpecialtyById(long id);
 
-    void deactivateMedicalSpecialtyById(Long id);
+    List<MedicalSpecialty> getAllMedicalSpecialties();
 
-    void activateMedicalSpecialtyById(Long id);
+    void deactivateMedicalSpecialty(long id);
 
-    List<MedicalSpecialty> getAllMedicalSpecialty();
+    void activateMedicalSpecialty(long id);
 }
