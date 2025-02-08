@@ -5,6 +5,8 @@ import org.gatodev.arcadiaclinica.entity.persons.Doctor;
 import org.gatodev.arcadiaclinica.repository.persons.IDoctorRepository;
 import org.gatodev.arcadiaclinica.service.persons.IDoctorService;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -61,5 +63,10 @@ public class DoctorServiceImpl implements IDoctorService {
     @Override
     public List<Doctor> getAllDoctors() {
         return doctorRepository.findAll();
+    }
+
+    @Override
+    public boolean existsMedicalAppointmentByDoctor(long id, LocalTime entrance, LocalTime exit) {
+        return doctorRepository.existsByIdAndEntranceWorkLessThanEqualAndExitWorkGreaterThanEqual(id, entrance, exit);
     }
 }

@@ -1,19 +1,18 @@
 package org.gatodev.arcadiaclinica.DTO.business;
 
 import jakarta.validation.constraints.NotNull;
-
 import java.time.LocalDateTime;
 
 public record MedicalAppointmentRequest(
+        Long id,
+
+        @NotNull
         LocalDateTime appointmentStart,
-        @NotNull(message = "Debe incluir un servicio medico.")
+
+        @NotNull
         Long idMedicalService,
-        @NotNull(message = "Debe incluir un paciente.")
-        Long idPatient,
-        @NotNull(message = "Debe incluir un doctor.")
+
+        @NotNull
         Long idDoctor
 ) {
-    public MedicalAppointmentRequest {
-        if (appointmentStart == null) appointmentStart = LocalDateTime.now();
-    }
 }

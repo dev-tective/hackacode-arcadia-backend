@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ITypePaymentRepository extends JpaRepository<TypePayment, Long> {
-    boolean existsByName(String name);
 }

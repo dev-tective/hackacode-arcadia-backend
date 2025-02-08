@@ -10,4 +10,7 @@ import java.util.List;
 @Repository
 public interface IMedicalAppointmentRepository extends JpaRepository<MedicalAppointment, Long> {
     List<MedicalAppointment> findAllByPatient_Dni(String dni);
+    boolean existsByDoctor_IdAndAppointmentStartBeforeAndAppointmentEndAfter(
+            Long doctorId, LocalDateTime end, LocalDateTime start
+    );
 }

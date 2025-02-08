@@ -1,6 +1,9 @@
 package org.gatodev.arcadiaclinica.service.persons;
 
 import org.gatodev.arcadiaclinica.entity.persons.Doctor;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface IDoctorService {
@@ -17,4 +20,6 @@ public interface IDoctorService {
     void activateDoctor(long id);
 
     List<Doctor> getAllDoctors();
+
+    boolean existsMedicalAppointmentByDoctor(long id, LocalTime entrance, LocalTime exit);
 }

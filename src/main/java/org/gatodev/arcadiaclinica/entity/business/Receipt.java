@@ -21,11 +21,14 @@ public class Receipt {
     private Long id;
 
     @Column(nullable = false)
-    private Boolean paymentReceived = false;
+    private LocalDateTime attentionDate;
+
+    @Column(nullable = false)
+    private Boolean paymentReceived;
 
     private LocalDateTime datePaid;
 
-    private BigDecimal amount = BigDecimal.ZERO;
+    private BigDecimal amount;
 
     private Float discount;
 

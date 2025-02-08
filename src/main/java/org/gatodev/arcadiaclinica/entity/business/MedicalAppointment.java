@@ -1,6 +1,8 @@
 package org.gatodev.arcadiaclinica.entity.business;
 
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalService;
 import org.gatodev.arcadiaclinica.entity.persons.Doctor;
@@ -20,13 +22,12 @@ public class MedicalAppointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private LocalDateTime attentionDate;
-
-    @Column(nullable = false)
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "America/Lima")
     private LocalDateTime appointmentStart;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TIMESTAMP", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "America/Lima")
     private LocalDateTime appointmentEnd;
 
     @ManyToOne
