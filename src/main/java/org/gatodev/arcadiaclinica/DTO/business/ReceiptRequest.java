@@ -2,7 +2,6 @@ package org.gatodev.arcadiaclinica.DTO.business;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
 import java.time.LocalDateTime;
 import java.util.List;
 

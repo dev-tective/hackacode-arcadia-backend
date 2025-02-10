@@ -5,7 +5,6 @@ import org.gatodev.arcadiaclinica.entity.business.MedicalAppointment;
 import org.gatodev.arcadiaclinica.entity.business.Receipt;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalAttributes;
 import org.gatodev.arcadiaclinica.entity.medical.MedicalService;
-import org.gatodev.arcadiaclinica.entity.medical.MedicalServicePackage;
 import org.gatodev.arcadiaclinica.entity.persons.Client;
 import org.gatodev.arcadiaclinica.repository.business.IReceiptRepository;
 import org.gatodev.arcadiaclinica.repository.medical.IMedicalServicePackageRepository;
@@ -14,7 +13,6 @@ import org.gatodev.arcadiaclinica.service.business.IReceiptService;
 import org.gatodev.arcadiaclinica.service.persons.IClientService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
 import java.util.List;
 

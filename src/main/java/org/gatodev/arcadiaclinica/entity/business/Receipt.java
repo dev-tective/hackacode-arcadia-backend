@@ -23,17 +23,20 @@ public class Receipt {
     @Column(nullable = false)
     private LocalDateTime attentionDate;
 
+    //Datos cuando se paga una factura
     @Column(nullable = false)
     private Boolean paymentReceived;
 
     private LocalDateTime datePaid;
 
+    @ManyToOne
+    private TypePayment typePayment;
+
+    //
+
     private BigDecimal amount;
 
     private Float discount;
-
-    @ManyToOne
-    private TypePayment typePayment;
 
     @ManyToOne
     private Client client;

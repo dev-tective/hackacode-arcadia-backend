@@ -54,6 +54,7 @@ public class MedicalAppointmentServiceImpl implements IMedicalAppointmentService
 
         LocalDateTime appointmentEnd = medicalAppointment
                 .appointmentStart().plus(ms.getDuration());
+
         if (existMedicalAppointmentByDoctor(
                 doctor.getId(), appointmentEnd, medicalAppointment.appointmentStart())) {
             throw new RuntimeException("Doctor has another appointment on the same date and time.");

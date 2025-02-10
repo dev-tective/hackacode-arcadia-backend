@@ -6,11 +6,11 @@ import org.gatodev.arcadiaclinica.entity.persons.Client;
 import org.gatodev.arcadiaclinica.service.persons.IClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/client")
+@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/clients")
 public class ClientController {
 
     private final IClientService clientService;

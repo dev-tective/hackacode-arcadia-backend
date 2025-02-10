@@ -67,12 +67,6 @@ public class Person {
         return true;
     }
 
-    public void isEnabled() {
-        if (!enabled) {
-            throw new RuntimeException("Person not enabled");
-        }
-    }
-
     public void validateFields(String email, String dni, String numberPhone) {
         if (email != null && !Person.isValidEmail(email)) {
             throw new IllegalArgumentException("El email es invalido.");

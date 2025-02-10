@@ -22,12 +22,10 @@ public class MedicalAppointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "America/Lima")
+    @Column(nullable = false)
     private LocalDateTime appointmentStart;
 
-    @Column(columnDefinition = "TIMESTAMP", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "America/Lima")
+    @Column(nullable = false)
     private LocalDateTime appointmentEnd;
 
     @ManyToOne
